@@ -12,7 +12,8 @@
                 auto-complete="off" placeholder="密码"></el-input>
     </el-form-item>
     <el-form-item style="width: 100%">
-      <el-button type="primary" style="width: 100%;background: #505458;border: none" v-on:click="login">登录</el-button>
+      <!-- <el-button type="primary" style="width: 100%;background: #505458;border: none" v-on:click="login">登录</el-button> -->
+      <el-button type="primary" style="width: 100%;" v-on:click="login">登录</el-button>
     </el-form-item>
   </el-form>
   </body>
@@ -68,7 +69,7 @@
   }
 
   #poster {
-    background: url("../assets/login.jpg") no-repeat;
+    background: url("../assets/logo.png") no-repeat;
     background-position: center;
     height: 100%;
     width: 100%;
