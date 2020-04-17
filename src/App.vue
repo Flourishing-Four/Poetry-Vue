@@ -7,40 +7,37 @@
       <el-menu-item index="/fun">趣</el-menu-item>
       <el-menu-item index="/savor">品</el-menu-item>
       <el-menu-item index="/activity">竞</el-menu-item>
-      <el-button type="text" @click="gologin" class="el-icon-s-custom"> 登录</el-button>
+      <el-input v-model="search" class="search" placeholder="请输入" size="mini">
+        <el-button type="text" slot="append" @click="goSearch" icon="el-icon-search" size="mini"></el-button>
+      </el-input>
+      <el-button class="login" type="text" @click="goLogin" icon="el-icon-s-custom"> 登录</el-button>
     </el-menu>
+    <div class="zhezhao" id="zhezhao"></div>
     <keep-alive><router-view/></keep-alive>
   </div>
 </template>
 
 <script>
-import AppIndex from '@/components/home/AppIndex'
-import Login from './components/Login'
-import Classic from './components/classic/classic'
-import Info from './components/info/info'
-import Fun from './components/fun/fun'
-import Savor from './components/savor/savor'
-import Activity from './components/activity/activity'
 export default {
-  components: {
-    AppIndex,
-    Login,
-    Classic,
-    Info,
-    Fun,
-    Savor,
-    Activity
-  },
   data () {
     return {
+      search: ''
     }
   },
   methods: {
     handleSelect (key, keyPath) {
       this.$router.push({path: key})
     },
-    gologin () {
+    goLogin () {
       this.$router.push({path: '/login'})
+    },
+    goSearch () {
+      if (this.search !== null) {
+        this.$router.push({
+          path: '/search',
+          query: { search: this.search }
+        })
+      }
     }
   }
 }
@@ -54,11 +51,27 @@ export default {
   //text-align: center;
   margin: 0 auto;
   color: #2c3e50;
+  background-image: url("./assets/background.png");
+  background-repeat: repeat;
+  padding-bottom: 50px;
+}
+.zhezhao {
+  width:100%;
+  height:100%;
+  background-color:#000;
+  filter:alpha(opacity=50);
+  -moz-opacity:0.5;
+  opacity:0.5;
+  position:absolute;
+  left:0px;
+  top:0px;
+  display:none;
+  z-index:1000;
 }
 .logo {
   width: 30px;
   height: 30px;
-  margin: 10px 0;
+  margin: 16px;
   float: left;
   display: block;
   background-image: url("./assets/logo.png");
@@ -78,10 +91,21 @@ a:focus {
 }
 .el-menu {
   text-align: center;
-  padding: 0 80px;
+  margin: 0 auto;
+  padding: 0 120px;
+  .el-menu-item {
+    padding: 0 20px;
+    margin: 0 30px!important;
+    font-size: 20px;
+  }
+  .search {
+    width: 200px;
+    margin-top: 20px;
+  }
+  .login {
+    float: right;
+    margin-top: 20px;
+  }
 }
-.el-menu-item {
-  padding: 0 30px;
-  margin: 0 50px!important;
-}
+
 </style>

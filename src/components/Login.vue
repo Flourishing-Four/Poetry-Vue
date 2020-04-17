@@ -1,7 +1,7 @@
 <template xmlns:v-on="http://www.w3.org/1999/xhtml">
   <body id="poster">
-  <el-form class="login-container" label-position="left"
-           label-width="0px">
+  <el-form class="login-container" label-position="left" label-width="0px">
+    <el-button class="close" type="text" @click="goRoute" icon="el-icon-close" />
     <h3 class="login_title">系统登录</h3>
     <el-form-item>
       <el-input type="text" v-model="loginForm.username"
@@ -20,7 +20,6 @@
 </template>
 
 <script>
-
   export default {
     name: 'Login',
     data() {
@@ -46,20 +45,29 @@
           })
           .catch(failResponse => {
           })
+      },
+      goRoute () {
+        this.$router.back(-1)
       }
+
     }
   }
 </script>
-<style>
+
+<style lang="scss">
   .login-container {
     border-radius: 15px;
-    background-clip: padding-box;
-    margin: 190px auto;
+    margin: 0 auto;
     width: 350px;
     padding: 35px 35px 15px 35px;
     background: #fff;
     border: 1px solid #eaeaea;
     box-shadow: 0 0 25px #cac6c6;
+    .close {
+      float: right;
+      font-size: 28px;
+      padding: 0;
+    }
   }
 
   .login_title {
@@ -69,12 +77,14 @@
   }
 
   #poster {
-    background: url("../assets/logo.png") no-repeat;
+    background-color: rgba(100, 156, 156, 0.575);
     background-position: center;
     height: 100%;
     width: 100%;
+    padding: 130px 0;
     background-size: cover;
-    position: fixed;
+    /* position: fixed; */
+    float: left;
   }
 
   body {
