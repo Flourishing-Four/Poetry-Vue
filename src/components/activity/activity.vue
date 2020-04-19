@@ -13,7 +13,7 @@
           <el-divider direction="vertical"/>
           <el-button type="text" v-for="(item, index) in date" :key="item.lable" :class="item.select" @click="selectBtu(index + 3)">{{item.lable}}</el-button>
         </el-card>
-        <el-card class="activity-main__card">
+        <el-card class="activity-main__card" shadow="hover">
           <div class="activity-main__card--group" v-for="i in 2" :key="i">
             <span class="dateTitle">这是日期标题</span>
             <el-card shadow="hover" v-for="(item, index) in type" :key="index">{{item.lable}}</el-card>

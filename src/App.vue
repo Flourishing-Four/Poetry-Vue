@@ -7,7 +7,7 @@
       <el-menu-item index="/fun">趣</el-menu-item>
       <el-menu-item index="/savor">品</el-menu-item>
       <el-menu-item index="/activity">竞</el-menu-item>
-      <el-input v-model="search" class="search" placeholder="请输入" size="mini">
+      <el-input v-model="search" class="search" placeholder="请输入" size="mini" @keyup.enter.native="goSearch">
         <el-button type="text" slot="append" @click="goSearch" icon="el-icon-search" size="mini"></el-button>
       </el-input>
       <el-button class="login" type="text" @click="goLogin" icon="el-icon-s-custom"> 登录</el-button>
@@ -18,10 +18,11 @@
 </template>
 
 <script>
+import eventBus from './components/eventBus.js'// vue的空白实例（兄弟间的桥梁）
 export default {
   data () {
     return {
-      search: ''
+      search: null
     }
   },
   methods: {
@@ -37,6 +38,9 @@ export default {
           path: '/search',
           query: { search: this.search }
         })
+        eventBus.$emit('add', this.search)
+        // console.log(this.$refs.child)
+        // this.$refs.child.parentChild('keyyima')
       }
     }
   }
@@ -53,7 +57,7 @@ export default {
   color: #2c3e50;
   background-image: url("./assets/background.png");
   background-repeat: repeat;
-  padding-bottom: 50px;
+  //padding-bottom: 50px;
 }
 .zhezhao {
   width:100%;
