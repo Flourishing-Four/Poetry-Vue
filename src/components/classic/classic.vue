@@ -47,33 +47,10 @@
             </div>
         </div>
         <div class="classic-content">
-            <el-card class="classic-content__card">
+            <el-card class="classic-content__card" v-for="i in poetryTitle" :key="i">
                 <div slot="header" class="clearfix">
-                    <span>古诗词名称</span>
-                    <el-button style="float: right; padding: 3px 3px" type="text">收藏</el-button>
-                    <el-button style="float: right; padding: 3px 3px" type="text">点赞</el-button>
-                    <el-button style="float: right; padding: 3px 3px" type="text">赏</el-button>
-                    <el-button style="float: right; padding: 3px 3px" type="text">释</el-button>
-                </div>
-                <div v-for="o in 4" :key="o" class="text item">
-                    {{'古诗词内容 ' + o }}
-                </div>
-            </el-card>
-            <el-card class="classic-content__card">
-                <div slot="header" class="clearfix">
-                    <span>古诗词名称</span>
-                    <el-button style="float: right; padding: 3px 3px" type="text">收藏</el-button>
-                    <el-button style="float: right; padding: 3px 3px" type="text">点赞</el-button>
-                    <el-button style="float: right; padding: 3px 3px" type="text">赏</el-button>
-                    <el-button style="float: right; padding: 3px 3px" type="text">释</el-button>
-                </div>
-                <div v-for="o in 4" :key="o" class="text item">
-                    {{'古诗词内容 ' + o }}
-                </div>
-            </el-card>
-            <el-card class="classic-content__card">
-                <div slot="header" class="clearfix">
-                    <span>古诗词名称</span>
+                    <router-link :to="{name: 'ClassicPoem', query:{poetryTitle: i}}"><el-link :underline="false">{{i}}</el-link></router-link>
+                    <!-- <router-link :to="{path: '/index', query:{poetryTitle: i}}"><span>{{i}}</span></router-link> -->
                     <el-button style="float: right; padding: 3px 3px" type="text">收藏</el-button>
                     <el-button style="float: right; padding: 3px 3px" type="text">点赞</el-button>
                     <el-button style="float: right; padding: 3px 3px" type="text">赏</el-button>
@@ -92,6 +69,26 @@
 export default {
   data () {
     return {
+      poetryTitle: [
+        '将进酒',
+        '塞上曲',
+        '诗经·采薇'
+      ]
+    }
+  },
+  mounted () {
+    this.getApi()
+  },
+  methods: {
+    getApi () {
+      this.$axios
+        .get('http://localhost:8443/poetry/onepoetry/5')
+        .then(response => {
+          console.log(response)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   }
 }
@@ -106,6 +103,10 @@ export default {
         &__card {
             width: 560px;
             margin: 20px;
+            .el-link {
+                font-size: 20px;
+                font-weight: 500;
+            }
             .text {
             font-size: 14px;
             }

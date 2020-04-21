@@ -9,6 +9,7 @@ import Info from '@/components/info/info'
 import Fun from '@/components/fun/fun'
 import Savor from '@/components/savor/savor'
 import Activity from '@/components/activity/activity'
+import ClassicPoem from '@/components/classic/classicPoem'
 
 Vue.use(Router)
 
@@ -38,6 +39,18 @@ export default new Router({
       path: '/classic',
       name: 'Classic',
       component: Classic
+      /* children: [
+        {
+          path: '/classic/classicPoem',
+          name: 'ClassicPoem',
+          component: ClassicPoem
+        }
+      ] */ // 注册关系是同级路由 URL上是子路由
+    },
+    {
+      path: '/classic/classicPoem',
+      name: 'ClassicPoem',
+      component: ClassicPoem
     },
     {
       path: '/info',
