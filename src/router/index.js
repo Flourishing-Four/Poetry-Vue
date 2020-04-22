@@ -3,6 +3,7 @@ import Router from 'vue-router'
 // 导入刚才编写的组件
 import AppIndex from '@/components/home/AppIndex'
 import Login from '@/components/Login'
+import User from '@/components/user/user'
 import Search from '@/components/search/search'
 import Classic from '@/components/classic/classic'
 import Info from '@/components/info/info'
@@ -24,6 +25,11 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/user',
+      name: 'User',
+      component: User
     },
     {
       path: '/search',

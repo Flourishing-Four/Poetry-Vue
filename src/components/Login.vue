@@ -1,22 +1,34 @@
-<template xmlns:v-on="http://www.w3.org/1999/xhtml">
-  <body id="poster">
-  <el-form class="login-container" label-position="left" label-width="0px">
-    <el-button class="close" type="text" @click="goRoute" icon="el-icon-close" />
-    <h3 class="login_title">系统登录</h3>
-    <el-form-item>
-      <el-input type="text" v-model="loginForm.username"
-                auto-complete="off" placeholder="账号"></el-input>
-    </el-form-item>
-    <el-form-item>
-      <el-input type="password" v-model="loginForm.password"
-                auto-complete="off" placeholder="密码"></el-input>
-    </el-form-item>
-    <el-form-item style="width: 100%">
-      <!-- <el-button type="primary" style="width: 100%;background: #505458;border: none" v-on:click="login">登录</el-button> -->
-      <el-button type="primary" style="width: 100%;" v-on:click="login">登录</el-button>
-    </el-form-item>
-  </el-form>
-  </body>
+<template>
+  <div class="login">
+    <el-dialog title="登 录" :visible.sync="show" center>
+      <el-dialog  class="repeatCss" title="注 册" :visible.sync="innerVisible" center append-to-body>
+        <el-form class="login-container" label-position="left" label-width="0px">
+          <el-form-item>
+            <el-input type="text" v-model="loginForm.username" auto-complete="off" placeholder="用户名"/>
+          </el-form-item>
+          <el-form-item>
+            <el-input type="password" v-model="loginForm.password" auto-complete="off" placeholder="密码"/>
+          </el-form-item>
+        </el-form>
+          <el-button style="float: left; padding: 4px 10px" type="text" @click="innerVisible = false">返回登录</el-button>
+        <span slot="footer" class="dialog-footer">
+          <el-button style="width: 100%;" type="primary" @click="login">注 册</el-button>
+        </span>
+      </el-dialog>
+      <el-form class="login-container" label-position="left" label-width="0px">
+        <el-form-item>
+          <el-input type="text" v-model="loginForm.username" auto-complete="off" placeholder="用户名"/>
+        </el-form-item>
+        <el-form-item>
+          <el-input type="password" v-model="loginForm.password" auto-complete="off" placeholder="密码"/>
+        </el-form-item>
+      </el-form>
+        <el-button style="float: left; padding: 4px 10px" type="text" @click="innerVisible = true">还没有账号？点击注册</el-button>
+      <span slot="footer" class="dialog-footer">
+        <el-button style="width: 100%;" type="primary" @click="login">登 录</el-button>
+      </span>
+    </el-dialog>
+  </div>
 </template>
 
 <script>
@@ -24,6 +36,8 @@ export default {
   name: 'Login',
   data () {
     return {
+      show: false,
+      innerVisible: false,
       loginForm: {
         username: '',
         password: ''
@@ -32,6 +46,9 @@ export default {
     }
   },
   methods: {
+    showDialog () {
+      this.show = true
+    },
     login () {
       this.$axios
         .post('/login', {
@@ -47,56 +64,36 @@ export default {
         .catch(error => {
           console.log(error)
         })
-        /* .then(successResponse => {
-          if (successResponse.data.code === 200) {
-            this.$router.replace({path: '/index'})
-          }
-        })
-        .catch(failResponse => {
-        }) */
-    },
-    goRoute () {
-      this.$router.back(-1)
     }
-
   }
 }
 </script>
 
 <style lang="scss">
-  .login-container {
+.login {
+  .el-dialog {
+    width: 40%;
+    padding: 10px 40px;
     border-radius: 15px;
-    margin: 0 auto;
-    width: 350px;
-    padding: 35px 35px 15px 35px;
-    background: #fff;
-    border: 1px solid #eaeaea;
-    box-shadow: 0 0 25px #cac6c6;
-    .close {
-      float: right;
+    border: 1px solid #68AAAD;
+    box-shadow: 0 0 25px #494949;
+    .el-dialog__title {
       font-size: 28px;
-      padding: 0;
+      color: rgb(94, 147, 150);
     }
   }
-
-  .login_title {
-    margin: 0px auto 40px auto;
-    text-align: center;
-    color: #505458;
+}
+.repeatCss {
+  .el-dialog {
+    width: 40%;
+    padding: 10px 40px;
+    border-radius: 15px;
+    border: 1px solid #68AAAD;
+    box-shadow: 0 0 25px #494949;
+    .el-dialog__title {
+      font-size: 28px;
+      color: rgb(94, 147, 150);
+    }
   }
-
-  #poster {
-    background-color: rgba(100, 156, 156, 0.575);
-    background-position: center;
-    height: 100%;
-    width: 100%;
-    padding: 130px 0;
-    background-size: cover;
-    /* position: fixed; */
-    float: left;
-  }
-
-  body {
-    margin: 0px;
-  }
+}
 </style>

@@ -49,47 +49,27 @@
         <div class="savor-content">
             <el-card class="savor-content__card">
                 <div slot="header" class="clearfix">
-                    <span>古诗词名称（这个页面需要再商榷）</span>
-                    <el-button style="float: right; padding: 3px 3px" type="text">收藏</el-button>
-                    <el-button style="float: right; padding: 3px 3px" type="text">点赞</el-button>
-                    <!-- <el-button style="float: right; padding: 3px 3px" type="text">赏</el-button>
-                    <el-button style="float: right; padding: 3px 3px" type="text">释</el-button> -->
-                </div>
-                <div v-for="o in 4" :key="o" class="text item">
-                    {{'古诗词内容 ' + o }}
-                </div>
-            </el-card>
-            <el-card class="savor-content__card">
-                <div slot="header" class="clearfix">
                     <span>鉴赏方法（好像有疑问）</span>
                     <el-button style="float: right; padding: 3px 3px" type="text">收藏</el-button>
                     <el-button style="float: right; padding: 3px 3px" type="text">点赞</el-button>
-                    <!-- <el-button style="float: right; padding: 3px 3px" type="text">赏</el-button>
-                    <el-button style="float: right; padding: 3px 3px" type="text">释</el-button> -->
                 </div>
                 <div v-for="o in 4" :key="o" class="text item">
-                    {{'古诗词内容 ' + o }}
+                    {{'这里要放一篇教授赏析的通用方法 ，比如田园诗从景物入手' + o }}
                 </div>
             </el-card>
-            <el-card class="savor-content__card">
-                <div slot="header" class="clearfix">
-                    <span>评论区</span>
-                    <el-button style="float: right; padding: 3px 3px" type="text">收藏</el-button>
-                    <el-button style="float: right; padding: 3px 3px" type="text">点赞</el-button>
-                    <el-button style="float: right; padding: 3px 3px" type="text">赏</el-button>
-                    <el-button style="float: right; padding: 3px 3px" type="text">释</el-button>
-                </div>
-                <div v-for="o in 4" :key="o" class="text item">
-                    {{'古诗词内容 ' + o }}
-                </div>
+            <el-card class="savor-content__card" style="padding: 0;">
+                <comment></comment>
             </el-card>
-            <el-pagination background layout="prev, pager, next" :total="20"/>
         </div>
     </div>
 </template>
 
 <script>
+import Comment from 'hbl-comment'
 export default {
+  components: {
+    Comment
+  },
   data () {
     return {
     }
@@ -104,7 +84,7 @@ export default {
     &-content {
         padding: 0 20px;
         &__card {
-            width: 600px;
+            width: 660px;
             margin: 20px;
             .text {
             font-size: 14px;
@@ -120,15 +100,15 @@ export default {
             .clearfix:after {
                 clear: both
             }
-        }
-        .el-pagination {
-            width: 200px;
-            position: relative;
-            left: 360px;
+            .hbl-comm,
+            .comm,
+            .hbl-child {
+                padding: 10px 0 !important;
+            }
         }
     }
     &-tag {
-        width: 260px;
+        width: 200px;
         float: right;
         margin: 0 20px;
         padding: 20px;

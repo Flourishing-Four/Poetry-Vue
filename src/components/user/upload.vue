@@ -1,0 +1,121 @@
+<template>
+  <el-dialog title="上传我的作品" :visible.sync="show" class="upload">
+    <el-form :model="form" label-position="right" :rules="rules" ref="form">
+      <el-form-item label="上传配图" :label-width="formLabelWidth">
+          <el-upload
+            class="avatar-uploader"
+            action="https://jsonplaceholder.typicode.com/posts/"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload">
+            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
+      </el-form-item>
+      <el-form-item label="诗词题目" :label-width="formLabelWidth">
+        <el-input v-model="form.name" autocomplete="off" placeholder="请输入您创作的诗词作品的题目"></el-input>
+      </el-form-item>
+      <el-form-item label="诗词内容" :label-width="formLabelWidth">
+        <el-input v-model="form.content" type="textarea" :autosize="{minRows: 2, maxRows: 10}" placeholder="请输入您创作的诗词作品的内容"></el-input>
+      </el-form-item>
+      <el-form-item label="创作理念" :label-width="formLabelWidth">
+        <el-input v-model="form.desc" type="textarea" :autosize="{minRows: 2, maxRows: 10}" placeholder="您对您创作的诗词作品想说点什么呢？"></el-input>
+      </el-form-item>
+    </el-form>
+    <div slot="footer" class="dialog-footer">
+        <el-button @click="resetForm('form')">重 置</el-button>
+        <el-button type="primary" @click="submitForm('form')">上 传</el-button>
+    </div>
+  </el-dialog>
+</template>
+
+<script>
+export default {
+  data () {
+    return {
+      imageUrl: '',
+      show: false,
+      form: {
+        name: '',
+        content: '',
+        desc: ''
+      },
+      rules: {
+        name: [
+          { min: 1, max: 20, message: '长度在 1 到 20 个字符', trigger: 'blur' }
+        ],
+        content: [
+          { required: true, message: '诗词作品内容不能为空', trigger: 'blur' }
+        ],
+        desc: [
+          { required: true, message: '说说您的创作理念吧！', trigger: 'blur' }
+        ]
+      },
+      formLabelWidth: '100px'
+    }
+  },
+  methods: {
+    showDialog () {
+      this.show = true
+      this.changePwd = false
+    },
+    submitForm (formName) {
+      this.show = false
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          alert('submit!')
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    resetForm (formName) {
+      this.$refs[formName].resetFields()
+    },
+    handleAvatarSuccess (res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw)
+    },
+    beforeAvatarUpload (file) {
+      const isJPG = file.type === 'image/jpeg'
+      const isLt2M = file.size / 1024 / 1024 < 2
+
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!')
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!')
+      }
+      return isJPG && isLt2M
+    }
+  }
+}
+</script>
+
+<style lang="scss">
+.upload {
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
+}
+</style>

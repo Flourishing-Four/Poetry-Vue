@@ -10,16 +10,20 @@
       <el-input v-model="search" class="search" placeholder="请输入" size="mini" @keyup.enter.native="goSearch">
         <el-button type="text" slot="append" @click="goSearch" icon="el-icon-search" size="mini"></el-button>
       </el-input>
-      <el-button class="login" type="text" @click="goLogin" icon="el-icon-s-custom"> 登录</el-button>
+      <el-button class="login" type="text" @click="goLogin" icon="el-icon-s-custom"> 登 录</el-button>
     </el-menu>
-    <div class="zhezhao" id="zhezhao"></div>
+    <login ref="login"></login>
     <keep-alive><router-view/></keep-alive>
   </div>
 </template>
 
 <script>
+import Login from './components/Login'
 import eventBus from './components/eventBus.js'// vue的空白实例（兄弟间的桥梁）
 export default {
+  components: {
+    Login
+  },
   data () {
     return {
       search: null
@@ -30,7 +34,8 @@ export default {
       this.$router.push({path: key})
     },
     goLogin () {
-      this.$router.push({path: '/login'})
+      // this.$router.push({path: '/login'})
+      this.$refs.login.showDialog()
     },
     goSearch () {
       if (this.search !== null) {
