@@ -11,6 +11,8 @@ import Fun from '@/components/fun/fun'
 import Savor from '@/components/savor/savor'
 import Activity from '@/components/activity/activity'
 import ClassicPoem from '@/components/classic/classicPoem'
+import InfoPoet from '@/components/info/infoPoet'
+import ActivityWorks from '@/components/activity/activityWorks'
 
 Vue.use(Router)
 
@@ -64,6 +66,11 @@ export default new Router({
       component: Info
     },
     {
+      path: '/info/infoPoet',
+      name: 'InfoPoet',
+      component: InfoPoet
+    },
+    {
       path: '/fun',
       name: 'Fun',
       component: Fun
@@ -77,6 +84,11 @@ export default new Router({
       path: '/activity',
       name: 'Activity',
       component: Activity
+    },
+    {
+      path: '/activity/activityWorks',
+      name: 'ActivityWorks',
+      component: ActivityWorks
     }
 
   ]
