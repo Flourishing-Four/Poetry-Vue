@@ -16,7 +16,9 @@
         <el-card class="activity-main__card" shadow="hover">
           <div class="activity-main__card--group" v-for="i in 2" :key="i">
             <span class="dateTitle">这是日期标题</span>
-            <el-card shadow="hover" v-for="(item, index) in type" :key="index">{{item.lable}}</el-card>
+            <el-card shadow="hover" v-for="(item, index) in type" :key="index">{{item.lable}}
+              <router-link :to="{name: 'ActivityWorks', query:{userWorks: i}}"><el-link :underline="false">{{i}}</el-link></router-link>
+            </el-card>
           </div>
         </el-card>
     </div>
