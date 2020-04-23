@@ -50,8 +50,8 @@
             <el-card class="savor-content__card">
                 <div slot="header" class="clearfix">
                     <span>鉴赏方法（好像有疑问）</span>
-                    <el-button style="float: right; padding: 3px 3px" type="text">收藏</el-button>
-                    <el-button style="float: right; padding: 3px 3px" type="text">点赞</el-button>
+                    <el-button style="float: right; padding: 0; margin-left: 10px" type="text" :icon="iconCollection" @click="mark(0)"/>
+                    <el-button style="float: right; padding: 0" type="text" :icon="iconLikes" @click="mark(1)"/>
                 </div>
                 <div v-for="o in 4" :key="o" class="text item">
                     {{'这里要放一篇教授赏析的通用方法 ，比如田园诗从景物入手' + o }}
@@ -72,6 +72,10 @@ export default {
   },
   data () {
     return {
+      iconCollection: 'iconfont iconcollection',
+      markCollection: false, // 默认不收藏
+      iconLikes: 'iconfont iconlikes',
+      markLikes: false, // 默认不点赞
       label: '作者',
       placeholder: '说点什么吧',
       minRows: 2,
@@ -89,21 +93,6 @@ export default {
           content: '希望这篇文章能够帮到大家[害羞][害羞][害羞]<br/>',
           createDate: '2020-4-23 17:36:02',
           childrenList: [
-            {
-              id: 998,
-              commentUser: {
-                id: 998,
-                nickName: '雾非雾',
-                avatar: require('@/components/img/icon/avtar.png')
-              },
-              targetUser: {
-                id: 999,
-                nickName: '某知名语文老师',
-                avatar: 'http://qzapp.qlogo.cn/qzapp/101483738/6637A2B6611592A44A7699D14E13F7F7/50'
-              },
-              content: '真的就很棒！很Nice!',
-              createDate: '2020-4-23 17:45:26'
-            },
             {
               id: 998,
               commentUser: {
@@ -157,6 +146,20 @@ export default {
             ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
       return currentDate
     },
+    mark (index) {
+      if (index === 0) {
+        this.markCollection = !this.markCollection
+        if (this.markCollection) {
+          this.iconCollection = 'iconfont iconcollection-fill'
+        } else this.iconCollection = 'iconfont iconcollection'
+      } else {
+        this.markLikes = !this.markLikes
+        if (this.markLikes) {
+          this.iconLikes = 'iconfont iconlikes-fill'
+        } else this.iconLikes = 'iconfont iconlikes'
+      }
+    },
+    // 一级评论
     doSend (newCont) {
       this.commentList.push({
         id: '1',
@@ -168,8 +171,10 @@ export default {
         content: newCont,
         createDate: this.getFormatDate()
       })
+      this.commentNum++
       console.log('初始发送按钮点击事件：' + newCont)
     },
+    // 二级评论
     doChidSend (args) {
       const arr = [] // 被评论用户信息
       for (let i = 0; i < this.commentUserList.length; i++) {

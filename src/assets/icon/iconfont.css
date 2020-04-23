@@ -1,0 +1,33 @@
+@font-face {font-family: "iconfont";
+  src: url('iconfont.eot?t=1587635605460'); /* IE9 */
+  src: url('iconfont.eot?t=1587635605460#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAAOEAAsAAAAACGQAAAM2AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDKgqDeIM1ATYCJAMUCwwABCAFhG0HWxtMBxHVmyvIvjjgyfBGCUOoqjXCdcAZm+9HRJpI8D7Hw/f7sc598lFpkMSbNpNGIhFFE0OommQ6IRMioeyGonV9+P3Z20H+24kYhHRQJZ2FyFCkBGT+D4DNuR5B2AgzlG/Ro2+7ZOPs0jwdHDNdWoPl2WwuUW0dXqlpAx1QRPr2IZrC9MPYTQQN8TKBdqPmxFZ0IhK0KsCsQFzzODTQmtEpDeTQqmwqNhbxAqrW9CQV8Mx/Pv66hwJJzcDCg9MoJlj7CT3PS/t3RBGAP50FxjYy5lCIy0rbsRwF5mTtXmyxglZoSUwV6Hqe/1/FdAqOwm2UtSv/8JKsEA2Q2gnWlGDhJ4SZBD87mSR+dmlkTz4vCz7KRRW0o8Er4BMAuDHWkJRThxBKCF19ga6dw/hV+YXdyUUqk316lZEaKBheNEShGkdbW3SQbHHLyIAeGtkwNNSmj0E3tbWPS38W04xEopAYFBqDRrfMPcN41vZl8Nha2YqtbWqyvViwcR5EY9xL2BFr4zFmKSh6vAK8Fbo7QGcheKvIfx74farvX4Nb2Dc+cW2NK62pgPZMS1L7FuZI04TFHvKKCXRUWdrKy4VOj0wws2KPr2OT6grocI4osyk7YmeaiV3o3wBYzdIQaTspLkbrxesFDs9Qy4aLaC0uuNqX/Yf2HODL+VpqHCDfSt1xbtXmQPAr09OOoh74qtDxhD1fjosaFV3Rnfer+B7/n/I7lhVfCPS1uJmY5zqq+Ql8Ce3QyL+M0O/HNIqhzqmEVkMJJC1GIGs1hizYOag6LECj1Sq0m7W7vcOAG1mUNsy4kyD0eoek2wdkvT4jC/Y7VMP+Q6M3pKHdYWgf2GEi0HJ1FDSKGdg/lI47QkZdifQb5u/GSFrIKS8UX7ohCeN8+IodyhRL/CdPVQlIuIWLdB02DUMvXKHTsFDtD1FEVU8KHbeDlaOgUczA/qF03BHtrqvC998wfzdGGrJ6rC8UX/YPSRh3QF5lXaesWxnuP3mqSuo0Em7hIsdi07Av66vHVeg0LAb4+kMEq1FXWbi8on2BXCMP8ECNFDlK1GisrssafUBl06wcE87Fcu6kbB/zymXTDtrBAAAA') format('woff2'),
+  url('iconfont.woff?t=1587635605460') format('woff'),
+  url('iconfont.ttf?t=1587635605460') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+  url('iconfont.svg?t=1587635605460#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 26px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.iconlikes-fill:before {
+  content: "\e721";
+}
+
+.iconcollection:before {
+  content: "\e79d";
+}
+
+.iconcollection-fill:before {
+  content: "\e79e";
+}
+
+.iconlikes:before {
+  content: "\e7b3";
+}
+

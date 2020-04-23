@@ -8,6 +8,7 @@ import router from './router'
 import ElementUI from 'element-ui'
 import '../theme/index.css'
 import 'font-awesome/css/font-awesome.min.css'
+import '@/assets/icon/iconfont.css'
 /* import 'element-ui/lib/theme-chalk/index.css' */
 
 // 设置反向代理，前端请求默认发送到 http://localhost:8443/api

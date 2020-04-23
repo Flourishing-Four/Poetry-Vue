@@ -1,0 +1,37 @@
+{
+  "id": "1776586",
+  "name": "Poetry-Web",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon",
+  "description": "毕设网站",
+  "glyphs": [
+    {
+      "icon_id": "11481317",
+      "name": "favorites-fill",
+      "font_class": "likes-fill",
+      "unicode": "e721",
+      "unicode_decimal": 59169
+    },
+    {
+      "icon_id": "11494511",
+      "name": "collection",
+      "font_class": "collection",
+      "unicode": "e79d",
+      "unicode_decimal": 59293
+    },
+    {
+      "icon_id": "11494513",
+      "name": "collection-fill",
+      "font_class": "collection-fill",
+      "unicode": "e79e",
+      "unicode_decimal": 59294
+    },
+    {
+      "icon_id": "12011695",
+      "name": "favorites",
+      "font_class": "likes",
+      "unicode": "e7b3",
+      "unicode_decimal": 59315
+    }
+  ]
+}
