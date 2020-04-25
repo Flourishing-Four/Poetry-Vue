@@ -148,12 +148,12 @@ export default {
     },
     mark (index) {
       if (index === 0) {
-        this.markCollection = !this.markCollection
+        this.markCollection = !this.markCollection // 每点击一次就取反
         if (this.markCollection) {
           this.iconCollection = 'iconfont iconcollection-fill'
         } else this.iconCollection = 'iconfont iconcollection'
       } else {
-        this.markLikes = !this.markLikes
+        this.markLikes = !this.markLikes // 每点击一次就取反
         if (this.markLikes) {
           this.iconLikes = 'iconfont iconlikes-fill'
         } else this.iconLikes = 'iconfont iconlikes'

@@ -50,11 +50,6 @@
 export default {
   data () {
     return {
-      poetryTitle: [
-        '将进酒',
-        '塞上曲',
-        '诗经·采薇'
-      ],
       poetryData: [{
       }],
       poetryBody: [], // 用。！？；分割得到的诗文数组
@@ -62,9 +57,20 @@ export default {
       // testStr: '君！不见？黄河之水。天上来！奔流;到海。不复？回'
     }
   },
-  mounted () {
-    this.getApi()
+  activated () {
+    // this.poetryData = this.$store.getters.onePoetry
+    // console.log('yeah' + this.$store.getters.onePoetry.poetryTitle)
+    console.log(this.$route.query.poetryData.poetryTitle)
+    this.poetryData = this.$route.query.poetryData
+    this.dealWithPoem()
   },
+  /* updated () {
+    // this.poetryData = this.$store.getters.onePoetry
+    // console.log('yeah' + this.$store.getters.onePoetry.poetryTitle)
+    console.log(this.$route.query.poetryData.poetryTitle)
+    this.poetryData = this.$route.query.poetryData
+    this.dealWithPoem()
+  }, */
   methods: {
     getApi () {
       this.$axios
@@ -83,7 +89,10 @@ export default {
         })
     },
     dealWithPoem () {
-      // this.poetryBody = this.testStr.split('。')
+      this.poetryType = this.poetryData.poetryType.split('|')
+      this.poetryType.pop()// 分割类型 删除最后的空元素
+      this.poetryBody = this.poetryData.poetryBody.split('。')
+      this.poetryBody.pop()// 分割诗文 删除最后的空元素
       for (let i = 0; i < this.poetryBody.length; i++) {
         this.poetryBody.splice(i, 1, this.poetryBody[i] + '。')
         console.log('new' + this.poetryBody[i])

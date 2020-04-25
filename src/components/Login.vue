@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 export default {
   name: 'Login',
   data () {
@@ -42,28 +43,45 @@ export default {
         username: '',
         password: ''
       },
-      responseResult: []
+      responseResult: [],
+      userToken: ''
     }
   },
   methods: {
     showDialog () {
       this.show = true
     },
+    ...mapMutations(['changeLogin']),
     login () {
-      this.$axios
-        .post('/login', {
-          username: this.loginForm.username,
-          password: this.loginForm.password
-        })
-        .then(response => {
-          console.log(response)
-          if (response.data.code === 200) {
-            this.$router.replace({path: '/index'})
-          }
-        })
-        .catch(error => {
-          console.log(error)
-        })
+      let _this = this
+      if (this.loginForm.username === '' || this.loginForm.password === '') {
+        alert('用户名或密码不能为空')
+      } else {
+        this.$axios
+          .post('/api/login', {
+            username: this.loginForm.username,
+            password: this.loginForm.password
+          })
+          .then(response => {
+            console.log(response)
+            if (response.data.code === 200) {
+              // _this.userToken = 'Bearer ' + response.data.token
+              _this.userToken = 'Bearer'
+              console.log(_this.userToken)
+              // 将用户token保存到vuex中
+              _this.changeLogin({ Authorization: _this.userToken })
+              // this.$router.push('/index')
+              // alert('登录成功')
+              this.show = false
+              this.$emit('charge', this.show)
+              console.log('show' + this.show)
+            }
+          })
+          .catch(error => {
+            alert('用户名或密码错误')
+            console.log(error)
+          })
+      }
     }
   }
 }

@@ -10,32 +10,51 @@
       <el-input v-model="search" class="search" placeholder="请输入" size="mini" @keyup.enter.native="goSearch">
         <el-button type="text" slot="append" @click="goSearch" icon="el-icon-search" size="mini"></el-button>
       </el-input>
-      <el-button class="login" type="text" @click="goLogin" icon="el-icon-s-custom"> 登 录</el-button>
+      <el-button class="login" type="text" v-show="!isLogin" @click="goLogin" icon="el-icon-s-custom"> 登 录</el-button>
+      <el-popover class="login" v-show="isLogin" placement="bottom" trigger="hover" visible-arrow>
+        <el-button @click="goUser" type="text" style="display: block; margin-left: 10px;">个人中心</el-button>
+        <el-button @click="logout" type="text" style="display: block">退出登录</el-button>
+        <el-button slot="reference" @click="goUser" icon="el-icon-s-custom" type="text">林徽因</el-button>
+      </el-popover>
     </el-menu>
-    <login ref="login"></login>
+    <login ref="login" @charge="charge"></login>
     <keep-alive><router-view/></keep-alive>
   </div>
 </template>
 
 <script>
 import Login from './components/Login'
+import Userbox from './components/user/userBox'
 import eventBus from './components/eventBus.js'// vue的空白实例（兄弟间的桥梁）
 export default {
   components: {
-    Login
+    Login,
+    Userbox
   },
   data () {
     return {
-      search: null
+      search: null,
+      isLogin: false
     }
   },
+  /* mounted () {
+    this.charge()
+  }, */
   methods: {
     handleSelect (key, keyPath) {
       this.$router.push({path: key})
     },
     goLogin () {
-      // this.$router.push({path: '/login'})
+      // this.$router.replace({path: '/login'})
       this.$refs.login.showDialog()
+    },
+    goUser () {
+      this.$router.push({path: '/user'})
+    },
+    logout () {
+      localStorage.removeItem('Authorization')
+      this.$router.push('/index')
+      this.isLogin = false
     },
     goSearch () {
       if (this.search !== null) {
@@ -46,6 +65,12 @@ export default {
         eventBus.$emit('add', this.search)
         // console.log(this.$refs.child)
         // this.$refs.child.parentChild('keyyima')
+      }
+    },
+    charge (msg) {
+      console.log(msg)
+      if (!msg && localStorage.getItem('Authorization')) {
+        this.isLogin = true
       }
     }
   }
@@ -115,6 +140,10 @@ a:focus {
     float: right;
     margin-top: 20px;
   }
+}
+.el-popover {
+  min-width: 80px;
+  padding-left: 10px;
 }
 
 </style>

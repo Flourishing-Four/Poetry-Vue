@@ -6,6 +6,34 @@
   "description": "毕设网站",
   "glyphs": [
     {
+      "icon_id": "1026793",
+      "name": "我的-悬赏问标志",
+      "font_class": "shang-fill",
+      "unicode": "e644",
+      "unicode_decimal": 58948
+    },
+    {
+      "icon_id": "8229224",
+      "name": "注释",
+      "font_class": "zhushi-fill",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "13253146",
+      "name": "打赏_描边",
+      "font_class": "shang",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "13333885",
+      "name": "注释",
+      "font_class": "zhushi",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
       "icon_id": "11481317",
       "name": "favorites-fill",
       "font_class": "likes-fill",
