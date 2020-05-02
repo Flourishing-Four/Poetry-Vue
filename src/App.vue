@@ -89,6 +89,10 @@ export default {
   background-repeat: repeat;
   //padding-bottom: 50px;
 }
+.el-menu,
+.el-menu::before{
+  background-image: url('./components/img/menuImg.png');
+}
 .zhezhao {
   width:100%;
   height:100%;
@@ -105,16 +109,13 @@ export default {
 .logo {
   width: 30px;
   height: 30px;
-  margin: 16px;
+  margin: 14px 16px 16px 16px;
+  padding-right: 20px;
   float: left;
   display: block;
   background-image: url("./assets/logo.png");
   background-size:  30px;
   background-repeat: no-repeat;
-  span {
-    position: relative;
-    left: 30px;
-  }
 }
 a,
 .router-link-active
@@ -126,11 +127,13 @@ a:focus {
 .el-menu {
   text-align: center;
   margin: 0 auto;
-  padding: 0 120px;
+  padding: 0 80px;
+  padding-top: 10px;
   .el-menu-item {
+    font-family: 'STLiti';
     padding: 0 20px;
     margin: 0 30px!important;
-    font-size: 20px;
+    font-size: 34px;
   }
   .search {
     width: 200px;
