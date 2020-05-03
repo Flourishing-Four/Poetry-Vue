@@ -6,7 +6,7 @@
           <el-button style="float: right; padding: 4px 10px" type="text" @click="uploadOpen">上传我的作品</el-button>
           <el-button style="float: right; padding: 4px 10px" type="text" @click="editOpen">编辑我的资料</el-button>
           <div class="user-main__header--user">
-            <span class="userName">林徽因</span>
+            <span class="userName">{{username}}</span>
             <span class="userSign">君莫舞，君不见，玉环飞燕皆尘土</span>
           </div>
         </el-card>
@@ -39,7 +39,8 @@ export default {
   },
   data () {
     return {
-      activeName: 'works'
+      activeName: 'works',
+      username: this.$route.query.user
     }
   },
   mounted () {

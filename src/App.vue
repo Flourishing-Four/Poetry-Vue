@@ -14,7 +14,7 @@
       <el-popover class="login" v-show="isLogin" placement="bottom" trigger="hover" visible-arrow>
         <el-button @click="goUser" type="text" style="display: block; margin-left: 10px;">个人中心</el-button>
         <el-button @click="logout" type="text" style="display: block">退出登录</el-button>
-        <el-button slot="reference" @click="goUser" icon="el-icon-s-custom" type="text">林徽因</el-button>
+        <el-button slot="reference" @click="goUser" icon="el-icon-s-custom" type="text">{{username}}</el-button>
       </el-popover>
     </el-menu>
     <login ref="login" @charge="charge"></login>
@@ -34,7 +34,8 @@ export default {
   data () {
     return {
       search: null,
-      isLogin: false
+      isLogin: false,
+      username: ''
     }
   },
   /* mounted () {
@@ -49,12 +50,13 @@ export default {
       this.$refs.login.showDialog()
     },
     goUser () {
-      this.$router.push({path: '/user'})
+      this.$router.push({path: '/user', query: {user: this.username}})
     },
     logout () {
       localStorage.removeItem('Authorization')
       this.$router.push('/index')
       this.isLogin = false
+      this.$message('退出成功')
     },
     goSearch () {
       if (this.search !== null) {
@@ -67,9 +69,12 @@ export default {
         // this.$refs.child.parentChild('keyyima')
       }
     },
-    charge (msg) {
+    charge (msg, username) {
       console.log(msg)
+      console.log(username)
+      this.username = username
       if (!msg && localStorage.getItem('Authorization')) {
+        // console.log(localStorage.getItem('Authorization'))
         this.isLogin = true
       }
     }

@@ -59,7 +59,7 @@
           {{'古诗词内容 ' + o }}
         </div>
       </el-card>
-      <el-pagination background layout="prev, pager, next" :total="20"/>
+      <el-pagination background small @current-change="handleCurrentChange" :current-page="page" :page-size="5" layout="prev, pager, next" :total="30"/>
     </div>
   </div>
 </template>
@@ -68,6 +68,7 @@
 export default {
   data () {
     return {
+      page: 1,
       poet: [
         '李白',
         '杜甫',
@@ -106,11 +107,49 @@ export default {
       ]
     }
   },
+  mounted () {
+    this.getAuthor()
+    this.getKnow()
+  },
   methods: {
     changeDynasty (val) {
       console.log(val)
       this.isDynasty = true
       this.tDynasty = val
+    },
+    handleCurrentChange (val) {
+      this.page = val
+      this.getAuthor()
+    },
+    getAuthor () {
+      this.$axios
+        .get('http://localhost:8443/author/authorList', {
+          params: {
+            page: this.page,
+            pagesize: 5
+          }
+        })
+        .then(response => {
+          console.log(response)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    getKnow () {
+      this.$axios
+        .get('http://localhost:8443/knowledge/knowledgeList', {
+          params: {
+            page: this.page,
+            pagesize: 5
+          }
+        })
+        .then(response => {
+          console.log(response)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   }
 }
@@ -118,6 +157,7 @@ export default {
 
 <style lang="scss">
   .info {
+    padding-bottom: 40px;
     width: 1100px;
     margin: 10px auto;
     .el-divider {
@@ -178,7 +218,7 @@ export default {
       .el-pagination {
         width: 200px;
         position: relative;
-        left: 360px;
+        left: 320px;
       }
     }
     &-frag {

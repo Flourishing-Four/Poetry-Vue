@@ -24,8 +24,8 @@
                 <div slot="header" class="clearfix">
                     <router-link :to="{name: 'ClassicPoem', query:{poetryData: item}}"><el-link :underline="false" class="title">{{item.poetryTitle}}</el-link></router-link>
                     <span class="subTitle">{{item.dynasty + '·' + item.authorName}}</span>
-                    <el-button style="float: right; padding: 0; margin-left: 10px" type="text" :icon="iconCollection[index]" @click="mark(index, 0)"/>
-                    <el-button style="float: right; padding: 0; margin-left: 14px" type="text" :icon="iconLikes[index]" @click="mark(index, 1)"/>
+                    <el-button style="float: right; padding: 0; margin-left: 10px" type="text" :icon="iconCollection[index]" @click="mark(item.poetryId, index, 0)"/>
+                    <el-button style="float: right; padding: 0; margin-left: 14px" type="text" :icon="iconLikes[index]" @click="mark(item.poetryId, index, 1)"/>
                     <el-button style="float: right; padding: 0; margin-left: 14px" type="text" :icon="iconShang[index]" @click="changeTab(index, 0)"/>
                     <el-button style="float: right; padding: 0; margin-left: 14px" type="text" :icon="iconZhu[index]" @click="changeTab(index, 1)"/>
                 </div>
@@ -192,22 +192,47 @@ export default {
         console.log(vm.markCollection[index])
       })
     }, */
-    mark (index, num) {
+    mark (poetryId, index, num) {
       let vm = this
-      console.log(vm.iconCollection + index)
-      if (num === 0) {
-        vm.markCollection.splice(index, 1, !vm.markCollection[index]) // 每点击一次就取反
-        if (vm.markCollection[index]) {
-          vm.iconCollection.splice(index, 1, 'iconfont iconcollection-fill')
-        } else vm.iconCollection.splice(index, 1, 'iconfont iconcollection')
-        console.log(vm.markCollection + index)
+      if (localStorage.getItem('Authorization') !== null) {
+        console.log('用户已登录')
+        if (num === 0) {
+          vm.markCollection.splice(index, 1, !vm.markCollection[index]) // 每点击一次就取反
+          this.$axios
+            .post('poetryuserown/book', {
+              poetryId: poetryId,
+              isDo: vm.markCollection[index]
+            })
+            .then(response => {
+              console.log('正确' + response)
+              if (vm.markCollection[index]) {
+                vm.iconCollection.splice(index, 1, 'iconfont iconcollection-fill')
+              } else vm.iconCollection.splice(index, 1, 'iconfont iconcollection') // 取消收藏
+            })
+            .catch(error => {
+              console.log('错误' + error)
+            })
+        } else {
+          vm.markLikes.splice(index, 1, !vm.markLikes[index]) // 每点击一次就取反
+          this.$axios
+            .post('poetryuserown/praise', {
+              poetryId: poetryId,
+              isPraise: vm.markLikes[index]
+            })
+            .then(response => {
+              console.log('正确' + response)
+              if (vm.markLikes[index]) {
+                vm.iconLikes.splice(index, 1, 'iconfont iconlikes-fill')
+              } else vm.iconLikes.splice(index, 1, 'iconfont iconlikes') // 取消点赞
+            })
+            .catch(error => {
+              console.log('错误' + error)
+            })
+        }
       } else {
-        vm.markLikes.splice(index, 1, !vm.markLikes[index]) // 每点击一次就取反
-        if (vm.markLikes[index]) {
-          vm.iconLikes.splice(index, 1, 'iconfont iconlikes-fill')
-        } else vm.iconLikes.splice(index, 1, 'iconfont iconlikes')
+        console.log('用户wei登录')
+        this.$message.error('请登录后再进行操作')
       }
-      console.log(vm.markCollection[index])
     },
     handleCurrentChange (val) {
       this.page = val
@@ -215,7 +240,7 @@ export default {
     },
     getPoetry () {
       this.$axios
-        .get('http://localhost:8443/poetry/poetryList', {
+        .get('poetry/poetryList', {
           params: {
             page: this.page,
             pagesize: 5
@@ -265,7 +290,7 @@ export default {
       }
     },
     getDynasty (val) {
-      let url = 'http://localhost:8443/poetry/dynastyList/'
+      let url = 'poetry/dynastyList/'
       url += val
       this.$axios
         .get(url, {
@@ -303,7 +328,7 @@ export default {
     &-content {
         padding: 0 20px;
         &__card {
-            width: 560px;
+            width: 550px;
             margin: 20px;
             .el-link {
                 font-size: 22px;
