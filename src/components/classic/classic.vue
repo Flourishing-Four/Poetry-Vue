@@ -260,24 +260,46 @@ export default {
       let item = []
       let list = this.poetryData
       for (let i in list) {
-        item.push({poetryBody: list[i].poetryBody.split('。')})
-        item[i].poetryBody.pop()
+        let str = list[i].poetryBody.replace(/<[^>]+>/g, '')
+        // console.log('去掉htlm标签:' + str)
+        str = str.replace(/\s/g, '')
+        // console.log('去掉空格:' + str)
+        str = str.replace(/&nbsp;/ig, '')
+        // console.log('去掉nbsp:' + str)
+        str = str.replace(/\[.*?\]/g, '')
+        // console.log('去掉[]:' + str)
+        str = str.replace(/【[^】]+】/g, '')
+        // console.log('去掉【】:' + str)
+        item.push({poetryBody: str.split('。')})
+        // item[i].poetryBody.pop()
       }
       vm.poetryBodyList = item
-      console.log(vm.poetryBodyList)
       for (let j in vm.poetryBodyList) {
         for (let i in vm.poetryBodyList[j].poetryBody) {
-          vm.poetryBodyList[j].poetryBody.splice(i, 1, vm.poetryBodyList[j].poetryBody[i] + '。')
+          // 使用。分割后数组最后是空元素；此时的处理会使以？！结尾的诗句也会被圧进句号
+          if (vm.poetryBodyList[j].poetryBody[i] !== '') {
+            vm.poetryBodyList[j].poetryBody.splice(i, 1, vm.poetryBodyList[j].poetryBody[i] + '。')
+          }
+          let symbol = ['！', '？', '；']
+          for (let n in symbol) {
+            if (vm.poetryBodyList[j].poetryBody[i].indexOf(symbol[n]) !== -1) {
+              let str = vm.poetryBodyList[j].poetryBody[i].replace(/。/g, '') // 将多余的句号删除
+              let arr = str.split(symbol[n])
+              vm.poetryBodyList[j].poetryBody.splice(i, 1, arr[0] + symbol[n], arr[1])
+            }
+          }
         }
-        for (let i in vm.poetryBodyList[j].poetryBody) {
+        /* for (let i in vm.poetryBodyList[j].poetryBody) {
           if (vm.poetryBodyList[j].poetryBody[i].indexOf('！') !== -1) {
-            let arr = vm.poetryBodyList[j].poetryBody[i].split('！')
+            let str = vm.poetryBodyList[j].poetryBody[i].replace(/。/g, '')
+            let arr = str.split('！')
             vm.poetryBodyList[j].poetryBody.splice(i, 1, arr[0] + '！', arr[1])
           }
         }
         for (let i in vm.poetryBodyList[j].poetryBody) {
           if (vm.poetryBodyList[j].poetryBody[i].indexOf('？') !== -1) {
-            let arr = vm.poetryBodyList[j].poetryBody[i].split('？')
+            let str = vm.poetryBodyList[j].poetryBody[i].replace(/。/g, '')
+            let arr = str.split('？')
             vm.poetryBodyList[j].poetryBody.splice(i, 1, arr[0] + '？', arr[1])
           }
         }
@@ -286,7 +308,7 @@ export default {
             let arr = vm.poetryBodyList[j].poetryBody[i].split('；')
             vm.poetryBodyList[j].poetryBody.splice(i, 1, arr[0] + '；', arr[1])
           }
-        }
+        } */
       }
     },
     getDynasty (val) {

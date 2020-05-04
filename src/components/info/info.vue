@@ -2,14 +2,14 @@
   <div class="info">
     <div class="info-frag">
       <el-carousel :interval="8000" height="560px">
-        <el-carousel-item v-for="(item, index) in fragList" :key="index">
+        <el-carousel-item v-for="(item, index) in knowList" :key="index">
           <!-- <h3>{{ item }}</h3> -->
           <div class="info-frag__carousel">
-            <span class="info-frag__carousel--title">{{item.title}}</span>
+            <span class="info-frag__carousel--title">{{item.knowledgeTitle}}</span>
             <el-divider content-position="right">诗词小知识</el-divider>
             <span class="info-frag__carousel--content">
-                            {{item.content + '古诗词内容李白（701年－762年），字太白，号青莲居士，唐朝浪漫主义诗人，被后人誉为“诗仙”。'}}
-                        </span>
+              {{item.knowledgeContent}}
+            </span>
           </div>
         </el-carousel-item>
       </el-carousel>
@@ -23,40 +23,16 @@
       </el-card>
     </div>
     <div class="info-content">
-      <el-card class="info-content__card" v-for="i in poet" :key="i">
+      <el-card class="info-content__card" v-for="(item, index) in poetList" :key="index">
         <div class="avatar"></div>
         <div class="clearfix">
-          <router-link :to="{name: 'InfoPoet', query:{poet: i}}"><el-link :underline="false">{{i}}</el-link></router-link>
+          <router-link :to="{name: 'InfoPoet', query:{poetList: item}}"><el-link :underline="false">{{item.authorName}}</el-link></router-link>
           <!-- <span class="poem">李白</span> -->
-          <el-button style="float: right; padding: 3px 3px" type="text">收藏</el-button>
-          <el-button style="float: right; padding: 3px 3px" type="text">点赞</el-button>
-          <div v-for="o in 4" :key="o" class="text item">
-            {{'古诗词内容李白（701年－762年），字太白，号青莲居士，唐朝浪漫主义诗人，被后人誉为“诗仙”。' + o }}
+          <el-button style="float: right; padding: 0; margin-left: 10px" type="text" :icon="iconCollection[index]" @click="mark(item.id, index, 0)"/>
+          <el-button style="float: right; padding: 0; margin-left: 14px" type="text" :icon="iconLikes[index]" @click="mark(item.id, index, 1)"/>
+          <div class="text item">
+            {{item.authorDesc}}
           </div>
-        </div>
-      </el-card>
-      <el-card class="info-content__card">
-        <div slot="header" class="clearfix">
-          <span>古诗词名称</span>
-          <el-button style="float: right; padding: 3px 3px" type="text">收藏</el-button>
-          <el-button style="float: right; padding: 3px 3px" type="text">点赞</el-button>
-          <el-button style="float: right; padding: 3px 3px" type="text">赏</el-button>
-          <el-button style="float: right; padding: 3px 3px" type="text">释</el-button>
-        </div>
-        <div v-for="o in 4" :key="o" class="text item">
-          {{'古诗词内容 ' + o }}
-        </div>
-      </el-card>
-      <el-card class="info-content__card">
-        <div slot="header" class="clearfix">
-          <span>古诗词名称</span>
-          <el-button style="float: right; padding: 3px 3px" type="text">收藏</el-button>
-          <el-button style="float: right; padding: 3px 3px" type="text">点赞</el-button>
-          <el-button style="float: right; padding: 3px 3px" type="text">赏</el-button>
-          <el-button style="float: right; padding: 3px 3px" type="text">释</el-button>
-        </div>
-        <div v-for="o in 4" :key="o" class="text item">
-          {{'古诗词内容 ' + o }}
         </div>
       </el-card>
       <el-pagination background small @current-change="handleCurrentChange" :current-page="page" :page-size="5" layout="prev, pager, next" :total="30"/>
@@ -68,43 +44,54 @@
 export default {
   data () {
     return {
-      page: 1,
-      poet: [
-        '李白',
-        '杜甫',
-        '王维'
+      iconCollection: [
+        'iconfont iconcollection',
+        'iconfont iconcollection',
+        'iconfont iconcollection',
+        'iconfont iconcollection',
+        'iconfont iconcollection'
       ],
+      markCollection: [
+        false,
+        false,
+        false,
+        false,
+        false
+      ], // 默认不收藏
+      iconLikes: [
+        'iconfont iconlikes',
+        'iconfont iconlikes',
+        'iconfont iconlikes',
+        'iconfont iconlikes',
+        'iconfont iconlikes'
+      ],
+      markLikes: [
+        false,
+        false,
+        false,
+        false,
+        false
+      ], // 默认不点赞
+      page: 1,
+      poetList: [],
       isDynasty: false,
       tDynasty: '',
       dynasty: [
         '所有朝代',
-        '秦',
-        '两汉',
+        '先秦',
+        '汉朝',
         '魏晋',
         '南北朝',
-        '隋',
-        '唐',
-        '五代',
-        '宋',
-        '金',
-        '元',
-        '明',
-        '清'
+        '隋朝',
+        '唐朝',
+        '宋朝',
+        '元朝',
+        '明朝',
+        '清朝',
+        '近代',
+        '当代'
       ],
-      fragList: [
-        {
-          title: '标题一',
-          content: '内容一'
-        },
-        {
-          title: '标题二',
-          content: '内容二'
-        },
-        {
-          title: '标题三',
-          content: '内容三'
-        }
-      ]
+      knowList: []
     }
   },
   mounted () {
@@ -116,6 +103,7 @@ export default {
       console.log(val)
       this.isDynasty = true
       this.tDynasty = val
+      this.getDynasty(val)
     },
     handleCurrentChange (val) {
       this.page = val
@@ -131,6 +119,27 @@ export default {
         })
         .then(response => {
           console.log(response)
+          this.poetList = response.data
+          this.dealWithPoem(this.poetList, 0)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    getDynasty (val) {
+      let url = 'author/dynastyList/'
+      url += val
+      this.$axios
+        .get(url, {
+          params: {
+            page: this.page,
+            pagesize: 5
+          }
+        })
+        .then(response => {
+          console.log(response)
+          this.poetList = response.data
+          this.dealWithPoem(this.poetList, 0)
         })
         .catch(error => {
           console.log(error)
@@ -140,16 +149,96 @@ export default {
       this.$axios
         .get('http://localhost:8443/knowledge/knowledgeList', {
           params: {
-            page: this.page,
-            pagesize: 5
+            page: 1,
+            pagesize: 3
           }
         })
         .then(response => {
           console.log(response)
+          this.knowList = response.data
+          this.dealWithPoem(this.knowList, 1)
         })
         .catch(error => {
           console.log(error)
         })
+    },
+    mark (authorId, index, num) {
+      let vm = this
+      if (localStorage.getItem('Authorization') !== null) {
+        console.log('用户已登录')
+        if (num === 0) {
+          vm.markCollection.splice(index, 1, !vm.markCollection[index]) // 每点击一次就取反
+          this.$axios
+            .post('poetryuserown/book', {
+              poetryId: 1,
+              isDo: vm.markCollection[index]
+            })
+            .then(response => {
+              console.log('正确' + response)
+              if (vm.markCollection[index]) {
+                vm.iconCollection.splice(index, 1, 'iconfont iconcollection-fill')
+              } else vm.iconCollection.splice(index, 1, 'iconfont iconcollection') // 取消收藏
+            })
+            .catch(error => {
+              console.log('错误' + error)
+            })
+        } else {
+          vm.markLikes.splice(index, 1, !vm.markLikes[index]) // 每点击一次就取反
+          this.$axios
+            .post('poetryuserown/praise', {
+              poetryId: 1,
+              isPraise: vm.markLikes[index]
+            })
+            .then(response => {
+              console.log('正确' + response)
+              if (vm.markLikes[index]) {
+                vm.iconLikes.splice(index, 1, 'iconfont iconlikes-fill')
+              } else vm.iconLikes.splice(index, 1, 'iconfont iconlikes') // 取消点赞
+            })
+            .catch(error => {
+              console.log('错误' + error)
+            })
+        }
+      } else {
+        console.log('用户wei登录')
+        this.$message.error('请登录后再进行操作')
+      }
+    },
+    dealWithPoem (val, index) {
+      let list = val
+      for (let i in list) {
+        let strOld = index === 0 ? list[i].authorDesc : list[i].knowledgeContent
+        // console.log(str)
+        let str = strOld.replace(/<[^>]+>/g, '') // 去掉htlm标签
+        str = str.replace(/\s/g, '') // 去掉空格
+        str = str.replace(/&nbsp;/ig, '') // 去掉nbsp
+        str = str.replace(/\[.*?\]/g, '') // 去掉[]
+        str = str.replace(/【[^】]+】/g, '') // 去掉【】
+        // item.push({poetryBody: str.split('。')})
+        index === 0 ? list[i].authorDesc.repalce(/strOld/, str) : list[i].knowledgeContent.repalce(/strOld/, str)
+      }
+      /* val = list
+      return val */
+      console.log(list)
+      if (!index) {
+        this.poetList = list
+      } else this.knowList = list
+      /* for (let j in vm.poetryBodyList) {
+        for (let i in vm.poetryBodyList[j].poetryBody) {
+          // 使用。分割后数组最后是空元素；此时的处理会使以？！结尾的诗句也会被圧进句号
+          if (vm.poetryBodyList[j].poetryBody[i] !== '') {
+            vm.poetryBodyList[j].poetryBody.splice(i, 1, vm.poetryBodyList[j].poetryBody[i] + '。')
+          }
+          let symbol = ['！', '？', '；']
+          for (let n in symbol) {
+            if (vm.poetryBodyList[j].poetryBody[i].indexOf(symbol[n]) !== -1) {
+              let str = vm.poetryBodyList[j].poetryBody[i].replace(/。/g, '') // 将多余的句号删除
+              let arr = str.split(symbol[n])
+              vm.poetryBodyList[j].poetryBody.splice(i, 1, arr[0] + symbol[n], arr[1])
+            }
+          }
+        }
+      } */
     }
   }
 }
