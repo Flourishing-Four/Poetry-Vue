@@ -50,6 +50,7 @@ export default {
     /* if (JSON.parse(localStorage.getItem('historyList'))) {
       this.historyList = JSON.parse(localStorage.getItem('historyList'))
     } */
+    /* 通过eventBus监听兄弟组件的搜索事件 */
     this.historyList.push({'lable': this.$route.query.search, 'select': 'select'})
     eventBus.$on('add', (message) => {
       this.search_val = message
@@ -69,6 +70,7 @@ export default {
       }
       this.historyList[index].select = 'select'
     },
+    /* 历史记录处理方法 */
     get_search () {
       if (!this.historyList.includes(this.search_val)) {
         this.historyList.unshift({'lable': this.search_val, 'select': ''})
