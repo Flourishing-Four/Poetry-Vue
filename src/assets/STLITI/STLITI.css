@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+@font-face {
+  font-family: "STLITI";
+  src: url("STLITI.woff2") format("woff2"),
+       url("STLITI.woff") format("woff"),
+       url("STLITI.ttf") format("truetype"),
+       url("STLITI.eot") format("embedded-opentype"),
+       url("STLITI.svg") format("svg"),
+       url("STLITI.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
