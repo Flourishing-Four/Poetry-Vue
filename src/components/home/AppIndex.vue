@@ -54,7 +54,7 @@
       </div>
       <div class="homePage-main__sortPoem layout">
         <div class="homePage-main__sortPoem--sortBox" v-for="i in 5" :key="i"
-        :style ="{ 'background-image': 'url(' + sort_images[i-1] + ')'}">
+        :style ="{ 'background-image': 'url(' + sort_images[i-1] + ')', 'background-size': '100%'}">
         </div>
       </div>
       <div class="homePage-main__storyPoem layout">
@@ -143,6 +143,7 @@ export default {
     .bannerImg {
       width: 100%;
       height: inherit;
+      background-size: 100%;
       // max-height: 490px;
     }
   }
@@ -200,6 +201,7 @@ export default {
           width: 560px;
           margin-right: 60px;
           background-image: url("../img/index/poem.png");
+          background-size: 100%;
         }
         .Right {
           width: 480px;
@@ -210,6 +212,7 @@ export default {
           justify-content: center;
           align-items: center;
           background-image: url("../img/index/poem-right.png");
+          // background-size: 100%;
         }
       }
       &--singleBottom {
@@ -244,6 +247,7 @@ export default {
       margin: 140px 0;
       padding: 40px 120px;
       background-color: rgba(204, 224, 212,0.8);
+      // background-size: 100%!important;
       display: flex;
       &--sortBox {
         width: 200px;
@@ -255,6 +259,7 @@ export default {
       height: 380px;
       margin: 140px 120px;
       background-image: url("../img/index/storyPoem.png");
+      background-size: 100%;
       // need to delete background-color: rgb(187, 200, 216);
       display: flex;
       .splitLine{
@@ -297,6 +302,7 @@ export default {
       padding: 80px 240px;
       text-align: center;
       background-image: url("../img/index/game-background.png");
+      background-size: 100%;
       display: flex;
       &--gameLeft {
         width: 480px;

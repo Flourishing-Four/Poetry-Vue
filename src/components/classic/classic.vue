@@ -240,7 +240,7 @@ export default {
     },
     getPoetry () {
       this.$axios
-        .get('poetry/poetryList', {
+        .get('api/poetry/poetryList', {
           params: {
             page: this.page,
             pagesize: 5

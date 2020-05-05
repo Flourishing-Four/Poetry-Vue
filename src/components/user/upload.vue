@@ -61,11 +61,28 @@ export default {
     },
     submitForm (formName) {
       this.show = false
-      this.$refs[formName].validate((valid) => {
+      console.log(formName)
+      this.$refs[formName].validate((valid) => { //  && this.form.name && this.form.content && this.form.desc
         if (valid) {
-          alert('submit!')
+          this.$axios
+            .post('api/article/save', {
+              title: this.form.name,
+              content: this.form.content,
+              idea: this.form.desc,
+              token: localStorage.getItem('Authorization')
+            })
+            .then(response => {
+              console.log(response)
+              if (response.status === 200) {
+                this.$message('您的作品已成功上传！')
+              }
+            })
+            .catch(error => {
+              console.log(error)
+            })
         } else {
           console.log('error submit!!')
+          this.$message.error('上传失败，请检查您的填写内容')
           return false
         }
       })

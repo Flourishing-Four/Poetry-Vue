@@ -74,7 +74,7 @@ export default {
               // _this.userToken = 'Bearer' + response.headers.authorization
               console.log(_this.userToken)
               // 将用户token保存到vuex中
-              _this.changeLogin({ Authorization: _this.userToken })
+              _this.changeLogin({ Authorization: _this.userToken, Username: _this.loginForm.username })
               // this.$router.push('/index')
               // alert('登录成功')
               this.show = false

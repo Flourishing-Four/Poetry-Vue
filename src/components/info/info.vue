@@ -30,8 +30,10 @@
           <!-- <span class="poem">李白</span> -->
           <el-button style="float: right; padding: 0; margin-left: 10px" type="text" :icon="iconCollection[index]" @click="mark(item.id, index, 0)"/>
           <el-button style="float: right; padding: 0; margin-left: 14px" type="text" :icon="iconLikes[index]" @click="mark(item.id, index, 1)"/>
-          <div class="text item">
+          <!-- <div class="text item">
             {{item.authorDesc}}
+          </div> -->
+          <div class="text item" v-html=item.authorDesc>
           </div>
         </div>
       </el-card>
@@ -289,7 +291,8 @@ export default {
           margin-bottom: 10px;
         }
         .item {
-          font-size: 14px;
+          font-size: 16px;
+          line-height: 30px;
           margin: 10px 0;
           /* position: relative;
           top: -120px;

@@ -38,8 +38,16 @@ export default {
       username: ''
     }
   },
+  created () {
+    if (localStorage.removeItem('Authorization') && localStorage.removeItem('Username')) {
+      this.username = localStorage.getItem('Username')
+      this.isLogin = true
+      console.log('create localStorage' + localStorage.getItem('Username'))
+      console.log('create localStorage' + this.username)
+    }
+  },
   /* mounted () {
-    this.charge()
+    this.username = localStorage.getItem('Username')
   }, */
   methods: {
     handleSelect (key, keyPath) {
@@ -54,6 +62,7 @@ export default {
     },
     logout () {
       localStorage.removeItem('Authorization')
+      localStorage.removeItem('Username')
       this.$router.push('/index')
       this.isLogin = false
       this.$message('退出成功')
@@ -72,7 +81,8 @@ export default {
     charge (msg, username) {
       console.log(msg)
       console.log(username)
-      this.username = username
+      console.log('localStorage' + localStorage.getItem('Username'))
+      this.username = username || localStorage.getItem('Username')
       if (!msg && localStorage.getItem('Authorization')) {
         // console.log(localStorage.getItem('Authorization'))
         this.isLogin = true
