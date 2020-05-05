@@ -29,7 +29,7 @@
           <div class="Right">
             <div id="yue" v-show="!showShi && !showPin">
               [唐]&nbsp;&nbsp;李白
-              <div style="font-size:24px;font-family: 'STLiti';">
+              <div style="font-size:24px;font-family: 'STLITI';">
               大汉无中策，匈奴犯渭桥。
               <br />五原秋草绿，胡马一何骄。
               <br />命将征西极，横行阴山侧。
@@ -263,7 +263,7 @@ export default {
       // need to delete background-color: rgb(187, 200, 216);
       display: flex;
       .splitLine{
-          font-family: 'STLiti';
+          font-family: 'STLITI';
           text-align: center;
           padding: 6px 0;
           line-height: 40px;
@@ -312,7 +312,7 @@ export default {
         background-color: rgba(120, 146, 131, 0.2);
         // background-image: url("../img/index/game-left.png");
         h1{
-          font-family: 'STLiti';
+          font-family: 'STLITI';
           margin:0 0 7px 7px;
         }
         p{

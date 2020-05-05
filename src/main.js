@@ -9,11 +9,12 @@ import ElementUI from 'element-ui'
 import '../theme/index.css'
 import 'font-awesome/css/font-awesome.min.css'
 import '@/assets/icon/iconfont.css'
+import '@/assets/STLITI/STLITI.css'
 /* import 'element-ui/lib/theme-chalk/index.css' */
 
 // 设置反向代理，前端请求默认发送到 http://localhost:8443/api
 var axios = require('axios')
-axios.defaults.baseURL = 'http://localhost:8443'// url:/api删除
+axios.defaults.baseURL = 'http://localhost:8443' // url:/api删除
 // 全局注册，之后可在其他组件中通过 this.$axios 发送数据
 Vue.prototype.$axios = axios
 Vue.config.productionTip = false
