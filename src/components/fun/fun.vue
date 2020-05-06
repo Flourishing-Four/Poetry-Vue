@@ -3,25 +3,19 @@
       <div class="fun-timeline">
         <el-timeline>
             <el-timeline-item v-for="(time, index) in halfMonth" :key="index" :type="time.type" :timestamp="time.timestamp">
-                <el-button type="text" style="padding: 0px;" @click="cutOver(index)">{{'click: ' + time.content}}</el-button>
+                <el-button type="text" style="padding: 0px;" @click="cutOver(index)">{{contentList[index]}}</el-button>
             </el-timeline-item>
         </el-timeline>
       </div>
       <div class="fun-blank">
           <el-card class="fun-blank__box">
               <div slot="header" class="clearfix">
-                  <span>古诗词名称</span>
-                  <el-button style="float: right; padding: 3px 3px" type="text">收藏</el-button>
-                  <el-button style="float: right; padding: 3px 3px" type="text">点赞</el-button>
-                  <el-button style="float: right; padding: 3px 3px" type="text">赏</el-button>
-                  <el-button style="float: right; padding: 3px 3px" type="text">释</el-button>
+                  <span>{{funPoet.explainTitle}}</span>
               </div>
-              <div v-for="o in 10" :key="o" class="text item">
-                  {{'古诗词内容 ' + o }}
-              </div>
+              <div class="text item" v-html="funPoet.explainCont"></div>
           </el-card>
       </div>
-      <div class="fun-blank">
+      <!-- <div class="fun-blank">
           <el-card class="fun-blank__box">
               <div slot="header" class="clearfix">
                   <span>古诗词名称</span>
@@ -34,9 +28,16 @@
                   {{'古诗词内容 ' + o }}
               </div>
           </el-card>
-      </div>
+      </div> -->
       <div class="fun-show">
-          <el-card class="fun-show__card">
+          <el-card class="fun-show__card" v-for="(item, index) in funPoet.mainPoet" :key="index" >
+              <div slot="header" class="clearfix">
+                  <span>{{item.title}}</span>
+              </div>
+              <div class="text item" v-html="item.poet">
+              </div>
+          </el-card>
+          <!-- <el-card class="fun-show__card">
               <div slot="header" class="clearfix">
                   <span>古诗词名称</span>
                   <el-button style="float: right; padding: 3px 3px" type="text">收藏</el-button>
@@ -59,19 +60,7 @@
               <div v-for="o in 4" :key="o" class="text item">
                   {{'古诗词内容 ' + o }}
               </div>
-          </el-card>
-          <el-card class="fun-show__card">
-              <div slot="header" class="clearfix">
-                  <span>古诗词名称</span>
-                  <el-button style="float: right; padding: 3px 3px" type="text">收藏</el-button>
-                  <el-button style="float: right; padding: 3px 3px" type="text">点赞</el-button>
-                  <el-button style="float: right; padding: 3px 3px" type="text">赏</el-button>
-                  <el-button style="float: right; padding: 3px 3px" type="text">释</el-button>
-              </div>
-              <div v-for="o in 4" :key="o" class="text item">
-                  {{'古诗词内容 ' + o }}
-              </div>
-          </el-card>
+          </el-card> -->
           <!-- <el-pagination background layout="prev, pager, next" :total="20"/> -->
       </div>
     </div>
@@ -82,7 +71,7 @@ export default {
   data () {
     return {
       halfMonth: [],
-      contentList: [
+      /* contentList: [
         'zhe',
         'shi',
         'biao',
@@ -98,12 +87,17 @@ export default {
         'biao',
         'ti',
         'ma'
-      ]
+      ], */
+      contentList: [],
+      funPoet: []
     }
   },
   created () {
     this.getHalfMonth()
     this.halfMonth[0].type = 'primary'
+  },
+  mounted () {
+    this.getFun(0)
   },
   methods: {
     getHalfMonth () {
@@ -123,6 +117,22 @@ export default {
         this.halfMonth[i].type = ''
       }
       this.halfMonth[val].type = 'primary'
+      this.getFun(val)
+    },
+    getFun (val) {
+      this.$axios.get('http://localhost:8080/static/funPoet.json')
+        .then(res => {
+          console.log(res)
+          this.funPoet = res.data[val]
+          if (this.contentList.length < 2) {
+            for (let i in res.data) {
+              this.contentList.push(res.data[i].explainTitle)
+            }
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
 }
@@ -132,6 +142,7 @@ export default {
 .fun {
     width: 1000px;
     margin: 10px auto;
+    padding-bottom: 30px;
     &-timeline {
       float: left;
       width: 120px;
