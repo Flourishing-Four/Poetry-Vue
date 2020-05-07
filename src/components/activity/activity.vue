@@ -68,6 +68,7 @@ export default {
 
 <style lang="scss">
 .activity {
+  margin-top: 71px;
   .el-carousel {
     .el-carousel__item h3 {
       color: #475669;

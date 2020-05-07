@@ -44,6 +44,7 @@ export default {
     }
   },
   mounted () {
+    console.log(this.$route.query.user)
   },
   methods: {
     editOpen () {
@@ -58,6 +59,7 @@ export default {
 
 <style lang="scss">
 .user {
+  margin-top: 71px;
   &-main {
     padding: 10px 160px;
     .el-button {

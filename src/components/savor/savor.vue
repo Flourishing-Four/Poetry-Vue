@@ -49,12 +49,12 @@
         <div class="savor-content">
             <el-card class="savor-content__card">
                 <div slot="header" class="clearfix">
-                    <span>鉴赏方法（好像有疑问）</span>
+                    <span style="font-size: 22px;">{{savorList.poetryType + '诗鉴赏方法'}}</span>
                     <el-button style="float: right; padding: 0; margin-left: 10px" type="text" :icon="iconCollection" @click="mark(0)"/>
                     <el-button style="float: right; padding: 0" type="text" :icon="iconLikes" @click="mark(1)"/>
                 </div>
-                <div v-for="o in 4" :key="o" class="text item">
-                    {{'这里要放一篇教授赏析的通用方法 ，比如田园诗从景物入手' + o }}
+                <div class="text item" style="dispaly: flex; flex-shrink: 0;">
+                  <pre style="white-space: pre-wrap; line-height: 24px; font-family: Microsoft YaHei, 微软雅黑">{{savorList.content}}</pre>
                 </div>
             </el-card>
             <el-card class="savor-content__card" style="padding: 0;">
@@ -127,8 +127,12 @@ export default {
           nickName: '林徽因',
           avatar: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
         }
-      ]
+      ],
+      savorList: {}
     }
+  },
+  mounted () {
+    this.getMethods()
   },
   methods: {
     // 格式化时间方法
@@ -204,6 +208,24 @@ export default {
       console.log('评论内容content=' + args[0])
       console.log('被评论用户targetUserId=' + args[1])
       console.log('父级评论id=' + args[2])
+    },
+    getMethods () {
+      this.$axios.get('api/appreciate/methodList')
+        .then(res => {
+          console.log(res)
+          this.savorList = res.data[0]
+          this.dealWith()
+          // console.log(this.savorList.content.repalce(/\n/g, '<br/>'))
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    dealWith () {
+      console.log(this.savorList.content)
+      let list = this.savorList
+      let str = list.content.repalce(/。/g, '<br>')
+      console.log(str)
     }
   }
 }
@@ -211,15 +233,18 @@ export default {
 
 <style lang="scss">
 .savor {
+    margin-top: 71px!important;
+    padding-top: 20px;
     width: 1000px;
-    margin: 10px auto;
+    margin: 0px auto;
+    padding-bottom: 30px;
     &-content {
         padding: 0 20px;
         &__card {
             width: 660px;
-            margin: 20px;
+            margin: 0 20px 40px 20px;
             .text {
-            font-size: 14px;
+            font-size: 16px;
             }
             .item {
                 margin-bottom: 18px;
@@ -240,32 +265,34 @@ export default {
         }
     }
     &-tag {
-        width: 200px;
-        float: right;
-        margin: 0 20px;
-        padding: 20px;
-        background-color: rgba(195, 221, 205, 0.253);
-        border: 1px solid rgb(182, 198, 188);
-        border-radius: 4px;
-        &__box {
-            margin-bottom: 20px;
-            &--title {
-                display: block;
-                border-left: 3px solid #F9BE64;
-                margin-bottom: 10px;
-                padding: 4px 10px;
-            }
-            .another {
-                border-left: 3px solid #68AAAD;
-            }
-            &--btu {
-                display: flex;
-                flex-wrap: wrap;
-                .el-button {
-                    margin: 6px;
-                }
-            }
-        }
+      position: fixed;
+      right: 180px;
+      width: 200px;
+      // float: right;
+      margin: 0 20px;
+      padding: 20px;
+      background-color: rgba(195, 221, 205, 0.253);
+      border: 1px solid rgb(182, 198, 188);
+      border-radius: 4px;
+      &__box {
+          margin-bottom: 20px;
+          &--title {
+              display: block;
+              border-left: 3px solid #F9BE64;
+              margin-bottom: 10px;
+              padding: 4px 10px;
+          }
+          .another {
+              border-left: 3px solid #68AAAD;
+          }
+          &--btu {
+              display: flex;
+              flex-wrap: wrap;
+              .el-button {
+                  margin: 6px;
+              }
+          }
+      }
     }
 }
 </style>

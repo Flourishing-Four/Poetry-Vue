@@ -1,14 +1,13 @@
 <template>
   <div class="info">
     <div class="info-frag">
-      <el-carousel :interval="8000" height="560px">
+      <el-carousel :interval="8000" height="550px">
         <el-carousel-item v-for="(item, index) in knowList" :key="index">
           <!-- <h3>{{ item }}</h3> -->
           <div class="info-frag__carousel">
             <span class="info-frag__carousel--title">{{item.knowledgeTitle}}</span>
             <el-divider content-position="right">诗词小知识</el-divider>
-            <span class="info-frag__carousel--content">
-              {{item.knowledgeContent}}
+            <span class="info-frag__carousel--content" v-html="item.knowledgeContent">
             </span>
           </div>
         </el-carousel-item>
@@ -113,7 +112,7 @@ export default {
     },
     getAuthor () {
       this.$axios
-        .get('http://localhost:8443/author/authorList', {
+        .get('author/authorList', {
           params: {
             page: this.page,
             pagesize: 5
@@ -248,9 +247,11 @@ export default {
 
 <style lang="scss">
   .info {
+    margin-top: 71px!important;
+    padding-top: 20px;
     padding-bottom: 40px;
     width: 1100px;
-    margin: 10px auto;
+    margin: 0px auto;
     .el-divider {
       margin: 12px 0;
     }
@@ -258,7 +259,7 @@ export default {
       padding: 0 20px;
       &__card {
         width: 660px;
-        margin: 20px;
+        margin: 0 20px 40px 20px;
         .choose {
           font-weight: bold;
           /* color: #F9BE64; */
@@ -314,8 +315,10 @@ export default {
       }
     }
     &-frag {
+      position: fixed;
+      right: 140px;
       width: 340px;
-      float: right;
+      // float: right;
       //position: fixed;
       //right: 200px;
       margin: 0 20px;
@@ -342,19 +345,6 @@ export default {
           color: #3B4753;
         }
       }
-      /* .el-carousel__item h3 {
-          color: #475669;
-          font-size: 18px;
-          opacity: 0.75;
-          line-height: 300px;
-          margin: 0;
-      }
-      .el-carousel__item:nth-child(2n) {
-          background-color: #99bfba;
-      }
-      .el-carousel__item:nth-child(2n+1) {
-          background-color: #d3dce6;
-      } */
     }
   }
 </style>

@@ -140,19 +140,24 @@ export default {
 
 <style lang="scss">
 .fun {
+    margin-top: 71px!important;
+    padding-top: 20px;
     width: 1000px;
-    margin: 10px auto;
+    margin: 0px auto;
     padding-bottom: 30px;
     &-timeline {
-      float: left;
+      // float: left;
+      position: fixed;
+      left: 180px;
       width: 120px;
-      margin: 10px 20px 0 0;
+      margin: 10px 40px 0 0;
     }
     &-show {
         padding: 0 20px;
+        margin-left: 120px;
         &__card {
             width: 340px;
-            margin: 20px;
+            margin: 0 20px 30px 20px;
             .text {
             font-size: 14px;
             }
@@ -168,32 +173,17 @@ export default {
                 clear: both
             }
         }
-        /* .el-pagination {
-            width: 200px;
-            position: relative;
-            left: 360px;
-        } */
     }
     &-blank {
-        width: 420px;
-        float: right;
-        margin: 0 20px 20px 20px;
-        padding: 20px;
-        background-color: rgba(195, 221, 205, 0.253);
-        border: 1px solid rgb(182, 198, 188);
-        border-radius: 4px;
-        /*&__box {
-            margin-bottom: 20px;
-             &--title {
-                display: block;
-                border-left: 3px solid #F9BE64;
-                margin-bottom: 10px;
-                padding: 4px 10px;
-            }
-            .another {
-                border-left: 3px solid #68AAAD;
-            }
-        }*/
+      position: fixed;
+      right: 160px;
+      width: 420px;
+      // float: right;
+      margin: 0 20px 20px 20px;
+      padding: 20px;
+      background-color: rgba(195, 221, 205, 0.253);
+      border: 1px solid rgb(182, 198, 188);
+      border-radius: 4px;
     }
 }
 </style>

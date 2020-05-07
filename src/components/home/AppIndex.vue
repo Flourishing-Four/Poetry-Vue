@@ -138,6 +138,7 @@ export default {
 
 <style lang="scss">
 .homePage {
+  margin-top: 71px;
   background-color: #fff;
   &-banner {
     .bannerImg {

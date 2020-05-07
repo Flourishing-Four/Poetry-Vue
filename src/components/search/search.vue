@@ -94,6 +94,7 @@ export default {
 
 <style lang="scss">
 .search {
+  margin-top: 71px;
   &-main {
     padding: 10px 160px;
     &__bar {

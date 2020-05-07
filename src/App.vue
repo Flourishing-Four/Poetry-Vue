@@ -14,7 +14,7 @@
       <el-popover class="login" v-show="isLogin" placement="bottom" trigger="hover" visible-arrow>
         <el-button @click="goUser" type="text" style="display: block; margin-left: 10px;">个人中心</el-button>
         <el-button @click="logout" type="text" style="display: block">退出登录</el-button>
-        <el-button slot="reference" @click="goUser" icon="el-icon-s-custom" type="text">{{username}}</el-button>
+        <el-button slot="reference" @click="goUser" icon="el-icon-s-custom" type="text" style="margin-top: 8px;">{{username}}</el-button>
       </el-popover>
     </el-menu>
     <login ref="login" @charge="charge"></login>
@@ -90,26 +90,17 @@ export default {
   //text-align: center;
   margin: 0 auto;
   color: #2c3e50;
-  background-image: url("./assets/background.png");
-  background-repeat: repeat;
+  background-image: url('./components/img/bkgd.png');
+  background-size: 100%;
+  background-attachment: fixed;
+  // filter: blur(3px);
+  /* background-image: url("./assets/background.png");
+  background-repeat: repeat; */
   //padding-bottom: 50px;
 }
 .el-menu,
 .el-menu::before{
   background-image: url('./components/img/menuImg.png');
-}
-.zhezhao {
-  width:100%;
-  height:100%;
-  background-color:#000;
-  filter:alpha(opacity=50);
-  -moz-opacity:0.5;
-  opacity:0.5;
-  position:absolute;
-  left:0px;
-  top:0px;
-  display:none;
-  z-index:1000;
 }
 .logo {
   width: 30px;
@@ -134,6 +125,11 @@ a:focus {
   margin: 0 auto;
   padding: 0 80px;
   padding-top: 10px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
   .el-menu-item {
     font-family: 'STLITI';
     padding: 0 20px;
@@ -142,11 +138,13 @@ a:focus {
   }
   .search {
     width: 200px;
-    margin-top: 20px;
+    margin: 10px;
   }
   .login {
-    float: right;
-    margin-top: 20px;
+    // float: right;
+    margin-left: 60px;
+    margin-top: 16px;
+    margin-right: 120px;
   }
 }
 .el-popover {

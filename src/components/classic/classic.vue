@@ -8,14 +8,26 @@
                 </div>
             </div>
             <div class="classic-tag__box">
-                <span class="classic-tag__box--title another">类别</span>
+                <span class="classic-tag__box--title another">诗人</span>
                 <div class="classic-tag__box--btu">
-                    <el-button type="warning" size="mini">主要按钮</el-button>
-                    <el-button type="warning" size="mini">主要按钮</el-button>
-                    <el-button type="warning" size="mini">主要按钮</el-button>
-                    <el-button type="warning" size="mini">主要按钮</el-button>
-                    <el-button type="warning" size="mini">主要按钮</el-button>
-                    <el-button type="warning" size="mini">主要按钮</el-button>
+                    <el-button type="warning" size="mini" style="width:68px">苏轼</el-button>
+                    <el-button type="warning" size="mini" style="width:68px">李白</el-button>
+                    <el-button type="warning" size="mini" style="width:68px">陆游</el-button>
+                    <el-button type="warning" size="mini" style="width:68px">李清照</el-button>
+                    <el-button type="warning" size="mini" style="width:68px">杜甫</el-button>
+                    <el-button type="warning" size="mini" style="width:68px">王维</el-button>
+                    <el-button type="warning" size="mini" style="width:68px">辛弃疾</el-button>
+                    <el-button type="warning" size="mini" style="width:68px">白居易</el-button>
+                    <!-- <el-button type="warning" size="mini" style="width:68px">李商隐</el-button>
+                    <el-button type="warning" size="mini" style="width:68px">王安石</el-button>
+                    <el-button type="warning" size="mini" style="width:68px">柳永</el-button>
+                    <el-button type="warning" size="mini" style="width:68px">岑参</el-button> -->
+                </div>
+            </div>
+            <div class="classic-tag__box">
+                <span class="classic-tag__box--title">类别</span>
+                <div class="classic-tag__box--btu">
+                    <el-button type="primary" size="mini" style="width:68px" @click="getDynasty(item)" v-for="item in typeList" :key="item">{{item}}</el-button>
                 </div>
             </div>
         </div>
@@ -114,6 +126,20 @@ export default {
         '清朝',
         '近代',
         '当代'
+      ],
+      typeList: [
+        '写景',
+        '写水',
+        '写雪',
+        '写花',
+        '离别',
+        '送别',
+        '友情',
+        '爱情',
+        '边塞',
+        '田园',
+        '抒情',
+        '闺怨'
       ],
       poetryData: [{
       }],
@@ -240,7 +266,7 @@ export default {
     },
     getPoetry () {
       this.$axios
-        .get('api/poetry/poetryList', {
+        .get('poetry/poetryList', {
           params: {
             page: this.page,
             pagesize: 5
@@ -336,82 +362,86 @@ export default {
 
 <style lang="scss">
 .classic {
+  margin-top: 71px!important;
+  padding-top: 20px;
   padding-bottom: 40px;
-    .btuStyle {
-        margin-top: 4px;
-        margin-left: 18px;
-        width: 22px;
-        height: 22px;
-        border: 1.5px solid #68AAAD;
-        color: #68AAAD;
-    }
-    width: 1000px;
-    margin: 10px auto;
-    &-content {
-        padding: 0 20px;
-        &__card {
-            width: 550px;
-            margin: 20px;
-            .el-link {
-                font-size: 22px;
-                font-weight: 500;
-            }
-            .subTitle {
-                font-size: 12px;
-                color: rgb(165, 165, 165);
-                position: relative;
-                top: 5px;
-                right: -10px;
-            }
-            .text {
-              font-size: 16px;
-              line-height: 1.5;
-            }
-            .item {
-              margin-bottom: 14px;
-            }
-            .clearfix:before,
-            .clearfix:after {
-                display: table;
-                content: "";
-            }
-            .clearfix:after {
-                clear: both
+  .btuStyle {
+      margin-top: 4px;
+      margin-left: 18px;
+      width: 22px;
+      height: 22px;
+      border: 1.5px solid #68AAAD;
+      color: #68AAAD;
+  }
+  width: 1000px;
+  margin: 0px auto;
+  &-content {
+      padding: 0 20px;
+      &__card {
+          width: 550px;
+          margin: 0 20px 40px 20px;
+          .el-link {
+              font-size: 22px;
+              font-weight: 500;
+          }
+          .subTitle {
+              font-size: 12px;
+              color: rgb(165, 165, 165);
+              position: relative;
+              top: 5px;
+              right: -10px;
+          }
+          .text {
+            font-size: 16px;
+            line-height: 1.5;
+          }
+          .item {
+            margin-bottom: 14px;
+          }
+          .clearfix:before,
+          .clearfix:after {
+              display: table;
+              content: "";
+          }
+          .clearfix:after {
+              clear: both
+          }
+      }
+      .el-pagination {
+          width: 200px;
+          position: relative;
+          left: 320px;
+      }
+  }
+  &-tag {
+    position: fixed;
+    right: 160px;
+    width: 320px;
+    // float: right;
+    margin: 0 20px;
+    padding: 20px;
+    background-color: rgba(195, 221, 205, 0.253);
+    border: 1px solid rgb(182, 198, 188);
+    border-radius: 4px;
+    &__box {
+        margin-bottom: 20px;
+        &--title {
+            display: block;
+            border-left: 3px solid #F9BE64;
+            margin-bottom: 10px;
+            padding: 4px 10px;
+        }
+        .another {
+            border-left: 3px solid #68AAAD;
+        }
+        &--btu {
+            display: flex;
+            flex-wrap: wrap;
+            .el-button {
+                margin: 6px;
             }
         }
-        .el-pagination {
-            width: 200px;
-            position: relative;
-            left: 320px;
-        }
-    }
-    &-tag {
-        width: 320px;
-        float: right;
-        margin: 0 20px;
-        padding: 20px;
-        background-color: rgba(195, 221, 205, 0.253);
-        border: 1px solid rgb(182, 198, 188);
-        border-radius: 4px;
-        &__box {
-            margin-bottom: 20px;
-            &--title {
-                display: block;
-                border-left: 3px solid #F9BE64;
-                margin-bottom: 10px;
-                padding: 4px 10px;
-            }
-            .another {
-                border-left: 3px solid #68AAAD;
-            }
-            &--btu {
-                display: flex;
-                flex-wrap: wrap;
-                .el-button {
-                    margin: 6px;
-                }
-            }
-        }
-    }
+      }
+  }
 }
 </style>
