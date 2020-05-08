@@ -10,15 +10,15 @@
             <div class="classic-tag__box">
                 <span class="classic-tag__box--title another">诗人</span>
                 <div class="classic-tag__box--btu">
-                    <el-button type="warning" size="mini" style="width:68px">苏轼</el-button>
-                    <el-button type="warning" size="mini" style="width:68px">李白</el-button>
+                    <el-button type="warning" size="mini" style="width:68px" @click="getPoem(item)" v-for="item in poemList" :key="item">{{item}}</el-button>
+                    <!-- <el-button type="warning" size="mini" style="width:68px">李白</el-button>
                     <el-button type="warning" size="mini" style="width:68px">陆游</el-button>
                     <el-button type="warning" size="mini" style="width:68px">李清照</el-button>
                     <el-button type="warning" size="mini" style="width:68px">杜甫</el-button>
                     <el-button type="warning" size="mini" style="width:68px">王维</el-button>
                     <el-button type="warning" size="mini" style="width:68px">辛弃疾</el-button>
                     <el-button type="warning" size="mini" style="width:68px">白居易</el-button>
-                    <!-- <el-button type="warning" size="mini" style="width:68px">李商隐</el-button>
+                    <el-button type="warning" size="mini" style="width:68px">李商隐</el-button>
                     <el-button type="warning" size="mini" style="width:68px">王安石</el-button>
                     <el-button type="warning" size="mini" style="width:68px">柳永</el-button>
                     <el-button type="warning" size="mini" style="width:68px">岑参</el-button> -->
@@ -27,14 +27,14 @@
             <div class="classic-tag__box">
                 <span class="classic-tag__box--title">类别</span>
                 <div class="classic-tag__box--btu">
-                    <el-button type="primary" size="mini" style="width:68px" @click="getDynasty(item)" v-for="item in typeList" :key="item">{{item}}</el-button>
+                    <el-button type="primary" size="mini" style="width:68px" @click="getType(item)" v-for="item in typeList" :key="item">{{item}}</el-button>
                 </div>
             </div>
         </div>
         <div class="classic-content">
             <el-card class="classic-content__card" v-for="(item, index) in poetryData" :key="index">
                 <div slot="header" class="clearfix">
-                    <router-link :to="{name: 'ClassicPoem', query:{poetryData: item}}"><el-link :underline="false" class="title">{{item.poetryTitle}}</el-link></router-link>
+                    <router-link :to="{name: 'ClassicPoem', query:{poetryData: item}}"><el-link :underline="false" class="title">{{item.poetryTitle.replace(/[\(（][^\(（]+[\)）]/g, '')}}</el-link></router-link>
                     <span class="subTitle">{{item.dynasty + '·' + item.authorName}}</span>
                     <el-button style="float: right; padding: 0; margin-left: 10px" type="text" :icon="iconCollection[index]" @click="mark(item.poetryId, index, 0)"/>
                     <el-button style="float: right; padding: 0; margin-left: 14px" type="text" :icon="iconLikes[index]" @click="mark(item.poetryId, index, 1)"/>
@@ -140,6 +140,16 @@ export default {
         '田园',
         '抒情',
         '闺怨'
+      ],
+      poemList: [
+        '李白',
+        '王维',
+        '李清照',
+        '辛弃疾',
+        '陆游',
+        '苏轼',
+        '李商隐',
+        '杜甫'
       ],
       poetryData: [{
       }],
@@ -284,20 +294,14 @@ export default {
     dealWithPoem () {
       var vm = this
       let item = []
-      let list = this.poetryData
+      let list = vm.poetryData ? vm.poetryData : ''
       for (let i in list) {
-        let str = list[i].poetryBody.replace(/<[^>]+>/g, '')
-        // console.log('去掉htlm标签:' + str)
-        str = str.replace(/\s/g, '')
-        // console.log('去掉空格:' + str)
-        str = str.replace(/&nbsp;/ig, '')
-        // console.log('去掉nbsp:' + str)
-        str = str.replace(/\[.*?\]/g, '')
-        // console.log('去掉[]:' + str)
-        str = str.replace(/【[^】]+】/g, '')
-        // console.log('去掉【】:' + str)
+        let str = list[i].poetryBody.replace(/<[^>]+>/g, '') // 去掉htlm标签
+        str = str.replace(/\s/g, '') // 去掉空格
+        str = str.replace(/&nbsp;/ig, '') // 去掉nbsp
+        str = str.replace(/\[.*?\]/g, '') // 去掉[]
+        str = str.replace(/【[^】]+】/g, '') // 去掉【】
         item.push({poetryBody: str.split('。')})
-        // item[i].poetryBody.pop()
       }
       vm.poetryBodyList = item
       for (let j in vm.poetryBodyList) {
@@ -339,6 +343,44 @@ export default {
     },
     getDynasty (val) {
       let url = 'poetry/dynastyList/'
+      url += val
+      this.$axios
+        .get(url, {
+          params: {
+            page: this.page,
+            pagesize: 5
+          }
+        })
+        .then(response => {
+          console.log(response)
+          this.poetryData = response.data
+          this.dealWithPoem()// 用。！？；分割诗文数组
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    getPoem (val) {
+      let url = 'poetry/authorList/'
+      url += val
+      this.$axios
+        .get(url, {
+          params: {
+            page: this.page,
+            pagesize: 5
+          }
+        })
+        .then(response => {
+          console.log(response)
+          this.poetryData = response.data
+          this.dealWithPoem()// 用。！？；分割诗文数组
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    getType (val) {
+      let url = 'poetry/typeList/'
       url += val
       this.$axios
         .get(url, {
@@ -415,7 +457,7 @@ export default {
   }
   &-tag {
     position: fixed;
-    right: 160px;
+    right: 150px;
     width: 320px;
     // float: right;
     margin: 0 20px;

@@ -32,7 +32,7 @@
           <!-- <div class="text item">
             {{item.authorDesc}}
           </div> -->
-          <div class="text item" v-html=item.authorDesc>
+          <div class="text item" v-html="item.authorDesc">
           </div>
         </div>
       </el-card>
@@ -148,7 +148,7 @@ export default {
     },
     getKnow () {
       this.$axios
-        .get('http://localhost:8443/knowledge/knowledgeList', {
+        .get('knowledge/knowledgeList', {
           params: {
             page: 1,
             pagesize: 3

@@ -83,67 +83,69 @@ export default {
 
 <style lang="scss">
 .infoPoet {
+    margin-top: 71px!important;
+    padding-top: 20px;
     width: 900px;
-    margin: 10px auto;
+    margin: 0px auto;
     padding-bottom: 40px;
     &-bar {
-        padding: 0 20px;
-        &__card {
-            margin: 20px;
-            .poet-name{
-                font-size: 22px;
-                font-weight: 500;
-                color: #68AAAD;
-                margin-bottom: 10px;
-            }
-            .title {
-                padding: 14px 10px 0 10px;
-                font-size: 16px;
-            }
-            .text {
-                font-size: 14px;
-                margin-top: 5px;
-            }
-            .item {
-                margin-bottom: 10px;
-            }
+    padding: 0 20px;
+    &__card {
+        margin: 20px;
+        .poet-name{
+            font-size: 22px;
+            font-weight: 500;
+            color: #68AAAD;
+            margin-bottom: 10px;
+        }
+        .title {
+            padding: 14px 10px 0 10px;
+            font-size: 16px;
+        }
+        .text {
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .item {
+            margin-bottom: 10px;
         }
     }
+    }
     &-content {
-        padding: 0 20px;
-        .layout {
-            display: flex;
-            align-items: stretch;
-            padding-bottom: 40px;// 因为card高度100%失去了间距
+    padding: 0 20px;
+    .layout {
+        display: flex;
+        align-items: stretch;
+        padding-bottom: 40px;// 因为card高度100%失去了间距
+    }
+    &__card {
+        height: 100%;
+        margin: 20px;
+        .title {
+            padding: 14px 10px 0 10px;
+            font-size: 20px;
         }
-        &__card {
-            height: 100%;
-            margin: 20px;
-            .title {
-                padding: 14px 10px 0 10px;
-                font-size: 20px;
-            }
-            .el-card__body {
-                padding: 20px 30px;
-            }
-            .text {
-                font-size: 16px;
-            }
-            .item {
-                margin-bottom: 18px;
-            }
-            .lineHeight {
-                line-height: 36px;
-            }
-            .clearfix:before,
-            .clearfix:after {
-                display: table;
-                content: "";
-            }
-            .clearfix:after {
-                clear: both
-            }
+        .el-card__body {
+            padding: 20px 30px;
         }
+        .text {
+            font-size: 16px;
+        }
+        .item {
+            margin-bottom: 18px;
+        }
+        .lineHeight {
+            line-height: 36px;
+        }
+        .clearfix:before,
+        .clearfix:after {
+            display: table;
+            content: "";
+        }
+        .clearfix:after {
+            clear: both
+        }
+    }
     }
 }
 </style>
