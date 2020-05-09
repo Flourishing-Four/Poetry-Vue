@@ -263,9 +263,6 @@ export default {
             padding: 14px 10px 0 10px;
             font-size: 20px;
         }
-        .el-card__body {
-            padding: 20px 30px;
-        }
         .text {
             font-size: 16px;
         }

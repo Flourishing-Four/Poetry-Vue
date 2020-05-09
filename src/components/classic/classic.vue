@@ -236,7 +236,6 @@ export default {
           vm.markCollection.splice(index, 1, !vm.markCollection[index]) // 每点击一次就取反
           this.$axios
             .post('poetryuserown/book', {
-              // Authorization: localStorage.getItem('Authorization').replace('Bearer ', ''),
               poetryId: poetryId,
               isDo: vm.markCollection[index]
             })
@@ -458,7 +457,8 @@ export default {
   }
   &-tag {
     position: fixed;
-    left: 57%;
+    // right: 150px;
+    left: 58%;
     width: 320px;
     // float: right;
     margin: 0 20px;

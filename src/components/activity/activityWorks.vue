@@ -53,17 +53,15 @@ export default {
 
 <style lang="scss">
 .activityWorks {
+    margin-top: 71px!important;
+    padding-top: 20px;
+    padding-bottom: 40px;
     width: 900px;
     margin: 10px auto;
-    padding-bottom: 40px;
     &-bar {
         padding: 0 20px;
         &__card {
             margin: 20px;
-            .el-tag {
-                margin-left: 12px;
-                 font-size: 14px;
-            }
         }
     }
     &-content {
@@ -79,13 +77,6 @@ export default {
             .title {
                 padding: 14px 10px 0 10px;
                 font-size: 20px;
-            }
-            .subTitle {
-                font-size: 12px;
-                color: rgb(165, 165, 165);
-            }
-            .el-card__body {
-                padding: 20px 30px;
             }
             .text {
                 font-size: 16px;

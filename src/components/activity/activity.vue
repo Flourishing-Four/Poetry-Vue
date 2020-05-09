@@ -1,8 +1,17 @@
 <template>
   <div class="activity">
     <el-carousel :interval="4000" type="card" height="280px">
-        <el-carousel-item v-for="item in 6" :key="item">
+        <!-- <el-carousel-item v-for="item in 6" :key="item">
           <h3 class="medium">{{ item }}</h3>
+        </el-carousel-item> -->
+        <el-carousel-item>
+        <img src="../img/index/banner/banner1.png" class="bannerImg">
+        </el-carousel-item>
+        <el-carousel-item>
+        <img src="../img/index/banner/banner2.png" class="bannerImg">
+        </el-carousel-item>
+        <el-carousel-item>
+        <img src="../img/index/banner/banner3.png" class="bannerImg">
         </el-carousel-item>
     </el-carousel>
     <div class="activity-main">
@@ -14,10 +23,28 @@
           <el-button type="text" v-for="(item, index) in date" :key="item.lable" :class="item.select" @click="selectBtu(index + 3)">{{item.lable}}</el-button>
         </el-card>
         <el-card class="activity-main__card" shadow="hover">
-          <div class="activity-main__card--group" v-for="i in 2" :key="i">
-            <span class="dateTitle">这是日期标题</span>
-            <el-card shadow="hover" v-for="(item, index) in type" :key="index">{{item.lable}}
+          <div class="activity-main__card--group">
+            <span class="dateTitle">2020年5月9日</span>
+            <el-card shadow="hover">
+              <router-link :to="{name: 'ActivityMatch'}"><el-link :underline="false">【征稿启事】第四届“诗词中国”传统诗词创作大赛</el-link></router-link>
+            </el-card>
+            <el-card shadow="hover">
+              <router-link :to="{name: 'ActivityWorks'}"><el-link :underline="false">作品</el-link></router-link>
+            </el-card>
+            <el-card shadow="hover">
+              <router-link :to="{name: 'ActivityWorks'}"><el-link :underline="false">作品</el-link></router-link>
+            </el-card>
+          </div>
+          <div class="activity-main__card--group">
+            <span class="dateTitle">2020年5月7日</span>
+            <!-- <el-card shadow="hover" v-for="(item, index) in type" :key="index">{{item.lable}}
               <router-link :to="{name: 'ActivityWorks', query:{userWorks: i}}"><el-link :underline="false">{{i}}</el-link></router-link>
+            </el-card> -->
+            <el-card shadow="hover">
+              <router-link :to="{name: 'ActivityMatch'}"><el-link :underline="false">【征稿启事】第四届“诗词中国”传统诗词创作大赛</el-link></router-link>
+            </el-card>
+            <el-card shadow="hover">
+              <router-link :to="{name: 'ActivityWorks'}"><el-link :underline="false">作品</el-link></router-link>
             </el-card>
           </div>
         </el-card>
@@ -45,24 +72,24 @@ export default {
   },
   mounted () {
 
-  },
-  methods: {
-    // 此处传值方式需要完善，两组按钮分别单选
-    selectBtu (index) {
-      if (index < 3) {
-        for (var i = 0; i < this.type.length; i++) {
-          this.type[i].select = ''
-        }
-        this.type[index].select = 'select'
-      } else {
-        for (var j = 0; j < this.date.length; j++) {
-          this.date[j].select = ''
-        }
-        this.date[index - 3].select = 'select'
-      }
-      console.log(index)
-    }
   }
+  // methods: {
+  //   // 此处传值方式需要完善，两组按钮分别单选
+  //   selectBtu (index) {
+  //     if (index < 3) {
+  //       for (var i = 0; i < this.type.length; i++) {
+  //         this.type[i].select = ''
+  //       }
+  //       this.type[index].select = 'select'
+  //     } else {
+  //       for (var j = 0; j < this.date.length; j++) {
+  //         this.date[j].select = ''
+  //       }
+  //       this.date[index - 3].select = 'select'
+  //     }
+  //     console.log(index)
+  //   }
+  // }
 }
 </script>
 
@@ -70,19 +97,25 @@ export default {
 .activity {
   margin-top: 71px;
   .el-carousel {
-    .el-carousel__item h3 {
-      color: #475669;
-      font-size: 14px;
-      opacity: 0.75;
-      line-height: 100px;
-      margin: 0;
+    .bannerImg {
+      width: 100%;
+      height: inherit;
+      background-size: 100%;
+      // max-height: 490px;
     }
-    .el-carousel__item:nth-child(2n) {
-      background-color: #99a9bf;
-    }
-    .el-carousel__item:nth-child(2n+1) {
-      background-color: #d3dce6;
-    }
+    // .el-carousel__item h3 {
+    //   color: #475669;
+    //   font-size: 14px;
+    //   opacity: 0.75;
+    //   line-height: 100px;
+    //   margin: 0;
+    // }
+    // .el-carousel__item:nth-child(2n) {
+    //   background-color: #99a9bf;
+    // }
+    // .el-carousel__item:nth-child(2n+1) {
+    //   background-color: #d3dce6;
+    // }
   }
   &-main {
     padding: 10px 160px;
@@ -113,15 +146,24 @@ export default {
         padding: 40px;
         .dateTitle {
           // margin-top: 40px;
+          font-size: 18px;
         }
         .el-card{
           margin: 30px;// 这里上下、左右的间距都会塌陷
+          font-size: 18px;
+        }
+        .el-link{
+          color: rgba(255, 255, 255, 0.973);
+          font-size: 15px;
+        }
+        .el-link:hover{
+          color: rgb(140, 16, 56);
         }
         .el-card:nth-child(2n) {
-          background-color: #99a9bf;
+          background-color: #a4b4ca;
         }
         .el-card:nth-child(2n+1) {
-          background-color: #d3dce6;
+          background-color: #c0cddb;
         }
       }
     }
