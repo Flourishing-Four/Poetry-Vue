@@ -210,7 +210,7 @@ export default {
       console.log('父级评论id=' + args[2])
     },
     getMethods () {
-      this.$axios.get('api/appreciate/methodList')
+      this.$axios.get('appreciate/methodList')
         .then(res => {
           console.log(res)
           this.savorList = res.data[0]
@@ -266,7 +266,7 @@ export default {
     }
     &-tag {
       position: fixed;
-      right: 180px;
+      left: 66%;
       width: 200px;
       // float: right;
       margin: 0 20px;

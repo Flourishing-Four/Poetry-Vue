@@ -150,7 +150,7 @@ export default {
       position: fixed;
       left: 180px;
       width: 120px;
-      margin: 10px 40px 0 0;
+      margin: 10px 60px 0 0;
     }
     &-show {
         padding: 0 20px;
@@ -176,7 +176,7 @@ export default {
     }
     &-blank {
       position: fixed;
-      right: 160px;
+      left: 52%;
       width: 420px;
       // float: right;
       margin: 0 20px 20px 20px;

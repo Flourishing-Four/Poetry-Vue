@@ -14,7 +14,7 @@
       <el-popover class="login" v-show="isLogin" placement="bottom" trigger="hover" visible-arrow>
         <el-button @click="goUser" type="text" style="display: block; margin-left: 10px;">个人中心</el-button>
         <el-button @click="logout" type="text" style="display: block">退出登录</el-button>
-        <el-button slot="reference" @click="goUser" icon="el-icon-s-custom" type="text" style="margin-top: 8px;">{{username}}</el-button>
+        <el-button slot="reference" @click="goUser" icon="el-icon-s-custom" type="text" style="margin-top: 14px;">{{username}}</el-button>
       </el-popover>
     </el-menu>
     <login ref="login" @charge="charge"></login>
@@ -38,9 +38,13 @@ export default {
       username: ''
     }
   },
-  /* mounted () {
-    this.charge()
-  }, */
+  created () {
+    if (localStorage.getItem('Username') && !this.isLogin) {
+      this.username = localStorage.getItem('Username')
+      this.isLogin = !this.isLogin
+      console.log(localStorage.getItem('Username') + !this.isLogin)
+    }
+  },
   methods: {
     handleSelect (key, keyPath) {
       this.$router.push({path: key})

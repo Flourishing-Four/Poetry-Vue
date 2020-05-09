@@ -316,7 +316,7 @@ export default {
     }
     &-frag {
       position: fixed;
-      right: 140px;
+      left: 62%;
       width: 340px;
       // float: right;
       //position: fixed;

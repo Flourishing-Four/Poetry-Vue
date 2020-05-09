@@ -26,8 +26,8 @@
                     <el-card class="infoPoet-content__card">
                         <div slot="header" class="clearfix">
                             <span class="title">{{poetWorks[0].poetryTitle}}</span>
-                            <el-button style="float: right; padding: 3px 3px" type="text">收藏</el-button>
-                            <el-button style="float: right; padding: 3px 3px" type="text">点赞</el-button>
+                            <el-button style="float: right; padding: 0; margin-left: 10px" type="text" :icon="iconCollection[0]" @click="mark(poetWorks[0].poetryId, 0, 0)"/>
+                            <el-button style="float: right; padding: 0; margin-left: 14px" type="text" :icon="iconLikes[0]" @click="mark(poetWorks[0].poetryId, 0, 1)"/>
                         </div>
                         <div class="text item" v-for="(item, index) in poetWorks[0].poetryBody" :key="index">
                             <span>{{item}}</span>
@@ -37,12 +37,12 @@
                 <el-col :span='12'>
                     <el-card class="infoPoet-content__card">
                         <div slot="header" class="clearfix">
-                            <span class="title">将进酒</span>
-                            <el-button style="float: right; padding: 3px 3px" type="text">收藏</el-button>
-                            <el-button style="float: right; padding: 3px 3px" type="text">点赞</el-button>
+                            <span class="title">{{poetWorks[1].poetryTitle}}</span>
+                            <el-button style="float: right; padding: 0; margin-left: 10px" type="text" :icon="iconCollection[1]" @click="mark(poetWorks[1].poetryId, 0, 0)"/>
+                            <el-button style="float: right; padding: 0; margin-left: 14px" type="text" :icon="iconLikes[1]" @click="mark(poetWorks[1].poetryId, 0, 1)"/>
                         </div>
-                        <div class="text item">
-                            <span>你好你好你好</span>
+                        <div class="text item" v-for="(item, index) in poetWorks[1].poetryBody" :key="index">
+                            <span>{{item}}</span>
                         </div>
                     </el-card>
                 </el-col>
@@ -51,24 +51,24 @@
                 <el-col :span='12'>
                     <el-card class="infoPoet-content__card">
                         <div slot="header" class="clearfix">
-                            <span class="title">将进酒</span>
-                            <el-button style="float: right; padding: 3px 3px" type="text">收藏</el-button>
-                            <el-button style="float: right; padding: 3px 3px" type="text">点赞</el-button>
+                            <span class="title">{{poetWorks[2].poetryTitle}}</span>
+                            <el-button style="float: right; padding: 0; margin-left: 10px" type="text" :icon="iconCollection[2]" @click="mark(poetWorks[2].poetryId, 0, 0)"/>
+                            <el-button style="float: right; padding: 0; margin-left: 14px" type="text" :icon="iconLikes[2]" @click="mark(poetWorks[2].poetryId, 0, 1)"/>
                         </div>
-                        <div class="text item">
-                            <span>你好你好你好</span>
+                        <div class="text item" v-for="(item, index) in poetWorks[2].poetryBody" :key="index">
+                            <span>{{item}}</span>
                         </div>
                     </el-card>
                 </el-col>
                 <el-col :span='12'>
                     <el-card class="infoPoet-content__card">
                         <div slot="header" class="clearfix">
-                            <span class="title">将进酒</span>
-                            <el-button style="float: right; padding: 3px 3px" type="text">收藏</el-button>
-                            <el-button style="float: right; padding: 3px 3px" type="text">点赞</el-button>
+                            <span class="title">{{poetWorks[3].poetryTitle}}</span>
+                            <el-button style="float: right; padding: 0; margin-left: 10px" type="text" :icon="iconCollection[3]" @click="mark(poetWorks[3].poetryId, 0, 0)"/>
+                            <el-button style="float: right; padding: 0; margin-left: 14px" type="text" :icon="iconLikes[3]" @click="mark(poetWorks[3].poetryId, 0, 1)"/>
                         </div>
-                        <div class="text item">
-                            <span>你好你好你好</span>
+                        <div class="text item" v-for="(item, index) in poetWorks[3].poetryBody" :key="index">
+                            <span>{{item}}</span>
                         </div>
                     </el-card>
                 </el-col>
@@ -81,11 +81,41 @@
 export default {
   data () {
     return {
+      iconCollection: [
+        'iconfont iconcollection',
+        'iconfont iconcollection',
+        'iconfont iconcollection',
+        'iconfont iconcollection',
+        'iconfont iconcollection'
+      ],
+      markCollection: [
+        false,
+        false,
+        false,
+        false,
+        false
+      ], // 默认不收藏
+      iconLikes: [
+        'iconfont iconlikes',
+        'iconfont iconlikes',
+        'iconfont iconlikes',
+        'iconfont iconlikes',
+        'iconfont iconlikes'
+      ],
+      markLikes: [
+        false,
+        false,
+        false,
+        false,
+        false
+      ], // 默认不点赞
       poetList: this.$route.query.poetList,
-      poetWorks: []
+      poetWorks: [{
+        poetryTitle: ''
+      }]
     }
   },
-  mounted () {
+  created () {
     console.log(this.poetList)
     this.getWorks()
   },
@@ -101,8 +131,7 @@ export default {
       })
         .then(res => {
           console.log(res)
-          let list = res.data
-          this.dealWith(list)
+          this.dealWith(res.data)
         })
         .catch(err => {
           console.log(err)
@@ -141,6 +170,50 @@ export default {
         val[m].poetryBody = list
       }
       this.poetWorks = val
+    },
+    mark (poetryId, index, num) {
+      let vm = this
+      if (localStorage.getItem('Authorization') !== null) {
+        console.log('用户已登录')
+        if (num === 0) {
+          vm.markCollection.splice(index, 1, !vm.markCollection[index]) // 每点击一次就取反
+          this.$axios
+            .post('collectlike/book', {
+              poetryId: poetryId,
+              isDo: vm.markCollection[index],
+              entityType: 2
+            })
+            .then(response => {
+              console.log('正确' + response)
+              if (vm.markCollection[index]) {
+                vm.iconCollection.splice(index, 1, 'iconfont iconcollection-fill')
+              } else vm.iconCollection.splice(index, 1, 'iconfont iconcollection') // 取消收藏
+            })
+            .catch(error => {
+              console.log('错误' + error)
+            })
+        } else {
+          vm.markLikes.splice(index, 1, !vm.markLikes[index]) // 每点击一次就取反
+          this.$axios
+            .post('collectlike/like', {
+              poetryId: poetryId,
+              isDo: vm.markLikes[index],
+              entityType: 2
+            })
+            .then(response => {
+              console.log('正确' + response.data.isDo)
+              if (vm.markLikes[index]) {
+                vm.iconLikes.splice(index, 1, 'iconfont iconlikes-fill')
+              } else vm.iconLikes.splice(index, 1, 'iconfont iconlikes') // 取消点赞
+            })
+            .catch(error => {
+              console.log('错误' + error)
+            })
+        }
+      } else {
+        console.log('用户wei登录')
+        this.$message.error('请登录后再进行操作')
+      }
     }
   }
 }

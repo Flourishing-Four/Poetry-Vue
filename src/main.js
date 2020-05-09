@@ -33,22 +33,22 @@ new Vue({
 })
 
 // 异步请求前在header里加入token
-/* axios.interceptors.request.use(
+axios.interceptors.request.use(
   config => {
-    if (config.url === '/jwt/login' || config.url === '/jwt') { // 如果是登录和注册操作，则不需要携带header里面的token
+    if (config.url === '/login' || config.url === '/register') { // 如果是登录和注册操作，则不需要携带header里面的token
     } else {
       if (localStorage.getItem('Authorization')) {
-        config.headers.Authorizatior = localStorage.getItem('Authorization')
+        config.headers.Authorization = localStorage.getItem('Authorization')
       }
     }
     return config
   },
   error => {
     return Promise.reject(error)
-  }) */
+  })
 
 // 异步请求后，判断token是否过期
-/* axios.interceptors.response.use(
+axios.interceptors.response.use(
   response => {
     return response
   },
@@ -57,11 +57,12 @@ new Vue({
       switch (error.response.status) {
         case 401:
           localStorage.removeItem('Authorization')
+          localStorage.removeItem('Username')
           this.$router.push('/index')
       }
     }
   }
-) */
+)
 
 // 异步请求前判断请求的连接是否需要token
 // 导航守卫

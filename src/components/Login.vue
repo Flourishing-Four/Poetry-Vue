@@ -62,7 +62,7 @@ export default {
         this.$message.error('用户名或密码不能为空')
       } else {
         this.$axios
-          .post('/api/login', {
+          .post('/login', {
             username: this.loginForm.username,
             password: this.loginForm.password,
             rememberMe: true
@@ -93,7 +93,7 @@ export default {
         this.$message.error('用户名或密码不能为空')
       } else {
         this.$axios
-          .post('/api/register', {
+          .post('/register', {
             username: this.registerForm.username,
             password: this.registerForm.password
           })
