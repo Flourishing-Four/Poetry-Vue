@@ -66,7 +66,7 @@ export default {
       if (localStorage.getItem('Authorization') !== null) {
         console.log('用户已登录')
         this.$axios
-          .get('api/article/update', {
+          .get('article/update', {
             params: {
               title: this.form.name,
               token: localStorage.getItem('Authorization')

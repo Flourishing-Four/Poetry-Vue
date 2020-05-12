@@ -65,7 +65,7 @@ export default {
       this.$refs[formName].validate((valid) => { //  && this.form.name && this.form.content && this.form.desc
         if (valid) {
           this.$axios
-            .post('api/article/save', {
+            .post('article/save', {
               title: this.form.name,
               content: this.form.content,
               idea: this.form.desc,
