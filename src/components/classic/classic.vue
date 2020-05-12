@@ -234,11 +234,9 @@ export default {
         console.log('用户已登录')
         if (num === 0) {
           vm.markCollection.splice(index, 1, !vm.markCollection[index]) // 每点击一次就取反
+          let url = 'poetryuserown/book/' + poetryId + '/' + vm.markCollection[index]
           this.$axios
-            .post('poetryuserown/book', {
-              poetryId: poetryId,
-              isDo: vm.markCollection[index]
-            })
+            .post(url)
             .then(response => {
               console.log('正确' + response)
               if (vm.markCollection[index]) {
@@ -250,11 +248,9 @@ export default {
             })
         } else {
           vm.markLikes.splice(index, 1, !vm.markLikes[index]) // 每点击一次就取反
+          let url = 'poetryuserown/praise/' + poetryId + '/' + vm.markLikes[index]
           this.$axios
-            .post('poetryuserown/praise', {
-              poetryId: poetryId,
-              isPraise: vm.markLikes[index]
-            })
+            .post(url)
             .then(response => {
               console.log('正确' + response)
               if (vm.markLikes[index]) {
