@@ -38,34 +38,35 @@
               <br />萧条清万里，瀚海寂无波。
               </div>
             </div>
-            <div id="shi" v-show="showShi">
-              这是释！
+            <div id="yi" v-show="showShi">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;由于大汉无灭匈奴之计策，至使匈奴进犯至渭桥。离长安不远的五原，就驻扎着胡人骄悍的兵马。将士们受命西征，大军横行于阴山之侧。攻下了盛产胭脂的燕支山，使胡人惊叹：失我燕支山，使我妇立无颜色！汉兵转战万里，大获全胜。回渡黄河，凯旋收兵。从此休兵，胡汉人民都乐其太平。茫茫瀚海，沙浪寂寂，萧条万里，和平安静。
             </div>
             <div id="pin" v-show="showPin">
-              这是品！
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;此诗声声实在，句句真情。诗意具有飞扬跋扈、迅猛阔大的气势，又充溢着边塞秋景萧煞悲凉之意，表达出诗人对唐太宗委任李靖等名将平定匈奴离叛的祝颂之意，也表现出诗人对国家安危的忧虑和对民生疾苦的关怀。
             </div>
           </div>
         </div>
         <div class="homePage-main__singlePoem--singleBottom">
           <el-button circle @click="infoChange(0)">阅</el-button>
-          <el-button circle @click="infoChange(1)" style="margin: 0 200px;">释</el-button>
+          <el-button circle @click="infoChange(1)" style="margin: 0 200px;">译</el-button>
           <el-button circle @click="infoChange(2)">品</el-button>
         </div>
       </div>
       <div class="homePage-main__sortPoem layout">
         <div class="homePage-main__sortPoem--sortBox" v-for="i in 5" :key="i"
         :style ="{ 'background-image': 'url(' + sort_images[i-1] + ')', 'background-size': '100%'}">
+        <router-link :to="{name: 'ClassicPoem', query:{sortDynasty}}"><el-link :underline="false" class="sortBox_title">{{sortDynasty}}</el-link></router-link>
         </div>
       </div>
       <div class="homePage-main__storyPoem layout">
         <div class="homePage-main__storyPoem--storyLeft">
-            <h1 class="splitLine">诗人生平轶事</h1>
+            <div class="splitLine">诗人生平轶事</div>
             <div class="homePage-main__storyPoem--content">
               <h2>李白</h2>
             </div>
         </div>
         <div class="homePage-main__storyPoem--storyRight">
-          <h1 class="splitLine">诗词小知识</h1>
+          <div class="splitLine">诗词小知识</div>
           <div class="homePage-main__storyPoem--content">
 
           </div>
@@ -103,21 +104,23 @@ export default {
     return {
       showShi: false,
       showPin: false,
-      // sortBox_images: [
-      //   {id: 0, idView: require('../img/index/sortBox/1.png')},
-      //   {id: 1, idView: require('../img/index/sortBox/2.png')},
-      //   {id: 2, idView: require('../img/index/sortBox/3.png')},
-      //   {id: 3, idView: require('../img/index/sortBox/4.png')},
-      //   {id: 4, idView: require('../img/index/sortBox/5.png')}
-      // ]
       sort_images: [
         require('../img/index/sortBox/1.png'),
         require('../img/index/sortBox/2.png'),
         require('../img/index/sortBox/3.png'),
         require('../img/index/sortBox/4.png'),
         require('../img/index/sortBox/5.png')
+      ],
+      sortDynasty: [
+        '唐',
+        '宋',
+        '元',
+        '明',
+        '清'
       ]
     }
+  },
+  mounted () {
   },
   methods: {
     infoChange (num) {
@@ -131,6 +134,25 @@ export default {
         this.showShi = false
         this.showPin = !this.showPin// true
       }
+    },
+    getDynasty (val) {
+      let url = 'poetry/dynastyList/'
+      url += val
+      this.$axios
+        .get(url, {
+          params: {
+            page: this.page,
+            pagesize: 5
+          }
+        })
+        .then(response => {
+          console.log(response)
+          this.poetryData = response.data
+          this.dealWithPoem()// 用。！？；分割诗文数组
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   }
 }
@@ -144,7 +166,7 @@ export default {
     .bannerImg {
       width: 100%;
       height: inherit;
-      background-size: 100%;
+      background-size: 100% 100%;
       // max-height: 490px;
     }
   }
@@ -199,21 +221,26 @@ export default {
         height: 340px;
         display: flex;
         .Left {
-          width: 560px;
+          width: 500px;
           margin-right: 60px;
           background-image: url("../img/index/poem.png");
-          background-size: 100%;
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
+          -moz-background-size: 100% 100%;
         }
         .Right {
-          width: 480px;
+          width: 540px;
           height: 340px;
           line-height:34px;
+          padding: 0 20px;
           display: flex;
           text-align: center;
           justify-content: center;
           align-items: center;
           background-image: url("../img/index/poem-right.png");
-          // background-size: 100%;
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
+          -moz-background-size: 100% 100%;
         }
       }
       &--singleBottom {
@@ -253,18 +280,28 @@ export default {
       &--sortBox {
         width: 200px;
         margin: 0 10px;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        -moz-background-size: 100% 100%;
         // background-color: aliceblue;
+        .sortBox_title{
+          text-align: center;
+          font-family: 'STLITI';
+          font-size: 24px;
+        }
       }
     }
     &__storyPoem {
       height: 380px;
       margin: 140px 120px;
       background-image: url("../img/index/storyPoem.png");
-      background-size: 100%;
-      // need to delete background-color: rgb(187, 200, 216);
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      -moz-background-size: 100% 100%;
       display: flex;
       .splitLine{
           font-family: 'STLITI';
+          font-size: 28px;
           text-align: center;
           padding: 6px 0;
           line-height: 40px;
@@ -280,13 +317,13 @@ export default {
         width: 620px;
         margin-right: 70px;
         border-radius: 3%;
-        background-color: rgba(204, 224, 212,0.3); // need to delete
+        background-color: rgba(204, 224, 212,0.3);
       }
       &--storyRight {
         width: 420px;
         height: 280px;
         border-radius: 3%;
-        background-color: rgba(204, 224, 212,0.3);  // need to delete
+        background-color: rgba(204, 224, 212,0.3);
         .more {
           font-size: 20px;
           color: rgb(140, 16, 56);
@@ -303,7 +340,9 @@ export default {
       padding: 80px 240px;
       text-align: center;
       background-image: url("../img/index/game-background.png");
-      background-size: 100%;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      -moz-background-size: 100% 100%;
       display: flex;
       &--gameLeft {
         width: 480px;
@@ -311,7 +350,6 @@ export default {
         padding: 20px 30px 40px 30px;
         border-radius: 3%;
         background-color: rgba(120, 146, 131, 0.2);
-        // background-image: url("../img/index/game-left.png");
         h1{
           font-family: 'STLITI';
           margin:0 0 7px 7px;
@@ -330,7 +368,7 @@ export default {
           justify-content: center;
           align-items: center;
           border-radius: 3%;
-          background-color: rgba(120, 146, 131, 0.2); // need to delete
+          background-color: rgba(120, 146, 131, 0.2);
         }
       }
     }
