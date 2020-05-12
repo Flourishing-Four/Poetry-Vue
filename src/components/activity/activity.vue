@@ -35,18 +35,19 @@
               <router-link :to="{name: 'ActivityWorks'}"><el-link :underline="false">作品</el-link></router-link>
             </el-card>
           </div>
-          <div class="activity-main__card--group">
+          <!-- <div class="activity-main__card--group">
             <span class="dateTitle">2020年5月7日</span>
-            <!-- <el-card shadow="hover" v-for="(item, index) in type" :key="index">{{item.lable}}
+            // 可删除
+            <el-card shadow="hover" v-for="(item, index) in type" :key="index">{{item.lable}}
               <router-link :to="{name: 'ActivityWorks', query:{userWorks: i}}"><el-link :underline="false">{{i}}</el-link></router-link>
-            </el-card> -->
+            </el-card>
             <el-card shadow="hover">
               <router-link :to="{name: 'ActivityMatch'}"><el-link :underline="false">【征稿启事】第四届“诗词中国”传统诗词创作大赛</el-link></router-link>
             </el-card>
             <el-card shadow="hover">
               <router-link :to="{name: 'ActivityWorks'}"><el-link :underline="false">作品</el-link></router-link>
             </el-card>
-          </div>
+          </div> -->
         </el-card>
     </div>
   </div>
@@ -67,13 +68,26 @@ export default {
         {lable: '全部', select: 'select'},
         {lable: '活动', select: ''},
         {lable: '作品展', select: ''}
-      ]
+      ],
+      ArticleData: [{}]
     }
   },
   mounted () {
-
-  }
-  // methods: {
+    this.getArticle()
+    console.log()
+  },
+  methods: {
+    getArticle () {
+      this.$axios
+        .get('article/articleList')
+        .then(response => {
+          console.log(response)
+          this.ArticleData = response.data
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
   //   // 此处传值方式需要完善，两组按钮分别单选
   //   selectBtu (index) {
   //     if (index < 3) {
@@ -89,7 +103,7 @@ export default {
   //     }
   //     console.log(index)
   //   }
-  // }
+  }
 }
 </script>
 
@@ -101,7 +115,7 @@ export default {
       width: 100%;
       height: inherit;
       background-size: 100%;
-      // max-height: 490px;
+      /*max-height: 490px;*/
     }
     // .el-carousel__item h3 {
     //   color: #475669;
