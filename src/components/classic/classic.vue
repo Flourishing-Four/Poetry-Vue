@@ -394,6 +394,17 @@ export default {
           console.log(error)
         })
     }
+  },
+  watch: {
+    '$route': {
+      handler (route) {
+        const that = this
+        if (route.query.dynasty !== null) {
+          console.log(route.query.dynasty)
+          that.getDynasty(route.query.dynasty)
+        }
+      }
+    }
   }
 }
 </script>

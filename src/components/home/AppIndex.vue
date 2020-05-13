@@ -53,9 +53,8 @@
         </div>
       </div>
       <div class="homePage-main__sortPoem layout">
-        <div class="homePage-main__sortPoem--sortBox" v-for="i in 5" :key="i"
-        :style ="{ 'background-image': 'url(' + sort_images[i-1] + ')', 'background-size': '100%'}">
-        <router-link :to="{name: 'ClassicPoem', query:{sortDynasty}}"><el-link :underline="false" class="sortBox_title">{{sortDynasty}}</el-link></router-link>
+        <div class="homePage-main__sortPoem--sortBox" v-for="(item, index) in dynasty" :key="index" :style ="{ 'background-image': 'url(' + sort_images[index] + ')', 'background-size': '100% 100%'}">
+        <router-link :to="{name: 'Classic', query:{dynasty:item +'朝'}}"><el-button type="text" class="sortBox_title" @click="getSort(item)">{{item}}</el-button></router-link>
         </div>
       </div>
       <div class="homePage-main__storyPoem layout">
@@ -111,7 +110,7 @@ export default {
         require('../img/index/sortBox/4.png'),
         require('../img/index/sortBox/5.png')
       ],
-      sortDynasty: [
+      dynasty: [
         '唐',
         '宋',
         '元',
@@ -135,24 +134,8 @@ export default {
         this.showPin = !this.showPin// true
       }
     },
-    getDynasty (val) {
-      let url = 'poetry/dynastyList/'
-      url += val
-      this.$axios
-        .get(url, {
-          params: {
-            page: this.page,
-            pagesize: 5
-          }
-        })
-        .then(response => {
-          console.log(response)
-          this.poetryData = response.data
-          this.dealWithPoem()// 用。！？；分割诗文数组
-        })
-        .catch(error => {
-          console.log(error)
-        })
+    getSort (item) {
+      this.$router.push({path: '/Classic', query: {dynasty: item + '朝'}})
     }
   }
 }
@@ -221,7 +204,7 @@ export default {
         height: 340px;
         display: flex;
         .Left {
-          width: 500px;
+          width: 48%;
           margin-right: 60px;
           background-image: url("../img/index/poem.png");
           background-repeat: no-repeat;
@@ -229,7 +212,7 @@ export default {
           -moz-background-size: 100% 100%;
         }
         .Right {
-          width: 540px;
+          width: 52%;
           height: 340px;
           line-height:34px;
           padding: 0 20px;
@@ -272,22 +255,26 @@ export default {
     }
     &__sortPoem {
       height: 450px;
-      margin: 140px 0;
+      margin: 8% 0;
       padding: 40px 120px;
-      background-color: rgba(204, 224, 212,0.8);
+      background-color: rgba(182,198,188,0.6);
+      // background-color: rgba(204, 224, 212,0.5);
       // background-size: 100%!important;
       display: flex;
       &--sortBox {
-        width: 200px;
+        width: 20%;
         margin: 0 10px;
         background-repeat: no-repeat;
         background-size: 100% 100%;
         -moz-background-size: 100% 100%;
         // background-color: aliceblue;
         .sortBox_title{
+          width: 100%;
           text-align: center;
           font-family: 'STLITI';
-          font-size: 24px;
+          font-size: 50px;
+          color: rgb(160, 68, 61);
+          margin-top: 80%;
         }
       }
     }
@@ -314,13 +301,13 @@ export default {
         align-items: center;
       }
       &--storyLeft {
-        width: 620px;
+        width: 58%;
         margin-right: 70px;
         border-radius: 3%;
         background-color: rgba(204, 224, 212,0.3);
       }
       &--storyRight {
-        width: 420px;
+        width: 42%;
         height: 280px;
         border-radius: 3%;
         background-color: rgba(204, 224, 212,0.3);
@@ -330,7 +317,7 @@ export default {
           font-weight: bold;
           position: relative;
           top: 230px;
-          left: 140px;
+          left: 41%;
         }
       }
     }
@@ -345,7 +332,7 @@ export default {
       -moz-background-size: 100% 100%;
       display: flex;
       &--gameLeft {
-        width: 480px;
+        width: 54%;
         margin-right: 3px;
         padding: 20px 30px 40px 30px;
         border-radius: 3%;
@@ -359,7 +346,7 @@ export default {
         }
       }
       &--gameRight {
-        width: 370px;
+        width: 46%;
         .each {
           height: 158px;
           margin-bottom: 3px;
