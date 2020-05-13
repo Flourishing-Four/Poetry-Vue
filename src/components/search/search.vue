@@ -47,15 +47,14 @@ export default {
     }
   },
   mounted () {
-    /* if (JSON.parse(localStorage.getItem('historyList'))) {
-      this.historyList = JSON.parse(localStorage.getItem('historyList'))
-    } */
+    this.searchPoet()
     /* 通过eventBus监听兄弟组件的搜索事件 */
     this.historyList.push({'lable': this.$route.query.search, 'select': 'select'})
     eventBus.$on('add', (message) => {
       this.search_val = message
       console.log('搜索触发' + this.search_val)
       this.get_search()
+      this.searchPoet()
       for (var i = 0; i < this.historyList.length; i++) {
         this.historyList[i].select = ''
       }
@@ -87,6 +86,16 @@ export default {
         this.historyList.pop()
       }// 仅保留6条记录
       console.log('数组' + this.historyList + '最新值' + this.search_val)
+    },
+    searchPoet () {
+      let url = 'poetry/search/' + this.search_val
+      this.$axios.post(url)
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
 }

@@ -124,6 +124,7 @@ export default {
       if (num === 0) {
         this.showShi = false// false
         this.showPin = false// false
+        this.$router.push({path: '/classic', query: {dynasty: '宋朝'}})
       } else if (num === 1) {
         this.showShi = !this.showShi// true
         this.showPin = false

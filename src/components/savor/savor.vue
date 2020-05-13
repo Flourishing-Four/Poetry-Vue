@@ -133,6 +133,7 @@ export default {
   },
   mounted () {
     this.getMethods()
+    this.saveComm()
   },
   methods: {
     // 格式化时间方法
@@ -226,6 +227,22 @@ export default {
       let list = this.savorList
       let str = list.content.repalce(/。/g, '<br>')
       console.log(str)
+    },
+    saveComm () {
+      this.$axios.post('comment/save', {
+        pid: 0,
+        replyUid: null,
+        userId: 'Lin',
+        content: '这是第一条评论',
+        entityId: 1,
+        type: 1
+      })
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
 }
