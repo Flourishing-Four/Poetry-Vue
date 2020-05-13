@@ -30,7 +30,7 @@ export default {
       this.$refs.viewWorks.showDialog()
     },
     getOwnWorks () {
-      let url = 'api/article/userList/'
+      let url = 'article/userList/'
       url += this.$route.query.user
       if (localStorage.getItem('Authorization') !== null) {
         console.log('用户已登录')
