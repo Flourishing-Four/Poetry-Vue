@@ -4,7 +4,7 @@
       <el-form-item label="上传配图" :label-width="formLabelWidth">
           <el-upload v-model="form.pic"
             class="avatar-uploader"
-            action= "https://jsonplaceholder.typicode.com/posts/"
+            action= "https:/localhost:8443/api/article/save"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload">
@@ -65,7 +65,7 @@ export default {
       console.log(formName)
       this.$refs[formName].validate((valid) => { //  && this.form.name && this.form.content && this.form.desc
         if (valid) {
-          let headers = {headers: {'Content-Type': 'multipart/form-data'}}
+          /* let headers = {headers: { 'contentType': 'multipart/form-data'}}
           let data = {
             title: this.form.name,
             content: this.form.content,
@@ -73,9 +73,26 @@ export default {
             // file: this.form.pic,
             contentType: false
             // token: localStorage.getItem('Authorization')
-          }
+          } */
+          /* this.axios.interceptors.request.use(
+            headers => {
+              if (localStorage.getItem('Authorization')) {
+                headers.contentType = 'multipart/form-data'
+              }
+              return headers
+            },
+            error => {
+              return Promise.reject(error)
+            }) */
           this.$axios
-            .post('article/save', data, headers)
+            .post('article/save', {
+              title: this.form.name,
+              content: this.form.content,
+              idea: this.form.desc
+            },
+            {
+              headers: {'Content-Type': 'multipart/form-data'}
+            })
             .then(response => {
               console.log(response)
               if (response.status === 200) {

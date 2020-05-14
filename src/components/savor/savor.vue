@@ -4,15 +4,30 @@
             <div class="savor-tag__box">
                 <span class="savor-tag__box--title">朝代</span>
                 <div class="savor-tag__box--btu">
-                    <el-button type="primary" size="mini">主要按钮</el-button>
-                    <el-button type="primary" size="mini">主要按钮</el-button>
-                    <el-button type="primary" size="mini">主要按钮</el-button>
-                    <el-button type="primary" size="mini">主要按钮</el-button>
-                    <el-button type="primary" size="mini">主要按钮</el-button>
-                    <el-button type="primary" size="mini">主要按钮</el-button>
+                    <el-button type="primary" size="mini" style="width:54px" v-for="i in dynastyList" :key="i">{{i}}</el-button>
                 </div>
             </div>
             <div class="savor-tag__box">
+                <span class="savor-tag__box--title another">类别</span>
+                <div class="savor-tag__box--btu">
+                    <el-button type="warning" size="mini" @click="getMethods(0)">田园诗词</el-button>
+                    <el-button type="warning" size="mini" @click="getMethods(1)">抒情诗词</el-button>
+                    <el-button type="warning" size="mini">边塞诗词</el-button>
+                    <el-button type="warning" size="mini">送别诗词</el-button>
+                    <el-button type="warning" size="mini">闺怨诗词</el-button>
+                    <el-button type="warning" size="mini">思乡诗词</el-button>
+                </div>
+            </div>
+            <div class="savor-tag__box">
+                <span class="savor-tag__box--title">作者</span>
+                <div class="savor-tag__box--btu">
+                    <el-button type="primary" size="mini">林徽因</el-button>
+                    <el-button type="primary" size="mini">徐志摩</el-button>
+                    <el-button type="primary" size="mini">张爱玲</el-button>
+                    <el-button type="primary" size="mini">陆小曼</el-button>
+                </div>
+            </div>
+            <!-- <div class="savor-tag__box">
                 <span class="savor-tag__box--title another">类别</span>
                 <div class="savor-tag__box--btu">
                     <el-button type="warning" size="mini">主要按钮</el-button>
@@ -22,29 +37,7 @@
                     <el-button type="warning" size="mini">主要按钮</el-button>
                     <el-button type="warning" size="mini">主要按钮</el-button>
                 </div>
-            </div>
-            <div class="savor-tag__box">
-                <span class="savor-tag__box--title">朝代</span>
-                <div class="savor-tag__box--btu">
-                    <el-button type="primary" size="mini">主要按钮</el-button>
-                    <el-button type="primary" size="mini">主要按钮</el-button>
-                    <el-button type="primary" size="mini">主要按钮</el-button>
-                    <el-button type="primary" size="mini">主要按钮</el-button>
-                    <el-button type="primary" size="mini">主要按钮</el-button>
-                    <el-button type="primary" size="mini">主要按钮</el-button>
-                </div>
-            </div>
-            <div class="savor-tag__box">
-                <span class="savor-tag__box--title another">类别</span>
-                <div class="savor-tag__box--btu">
-                    <el-button type="warning" size="mini">主要按钮</el-button>
-                    <el-button type="warning" size="mini">主要按钮</el-button>
-                    <el-button type="warning" size="mini">主要按钮</el-button>
-                    <el-button type="warning" size="mini">主要按钮</el-button>
-                    <el-button type="warning" size="mini">主要按钮</el-button>
-                    <el-button type="warning" size="mini">主要按钮</el-button>
-                </div>
-            </div>
+            </div> -->
         </div>
         <div class="savor-content">
             <el-card class="savor-content__card">
@@ -55,8 +48,16 @@
                 </div>
                 <div class="text item" style="dispaly: flex; flex-shrink: 0;">
                   <pre style="white-space: pre-wrap; line-height: 24px; font-family: Microsoft YaHei, 微软雅黑">{{savorList.content}}</pre>
+                  <el-button style="float: right; padding: 0; margin: 20px;" type="text" @click="getType(savorList.poetryType)">查看例子</el-button>
                 </div>
+                <!-- <div class="text item" v-show="show" v-html="moreType"></div> -->
             </el-card>
+            <!-- <el-card shadow="hover" v-show="show" v-for="(item, index) in moreType" :key="index">
+              <div slot="header" class="clearfix">
+                <router-link :to="{name: 'SavDetail', query:{poetryData: item}}"><el-link :underline="false">{{item.title}}</el-link></router-link>
+              </div>
+              <div class="text item" v-html="item.appreciate"></div>
+            </el-card> -->
             <el-card class="savor-content__card" style="padding: 0;">
                 <comment @doSend="doSend($event)"  @doChidSend="doChidSend(arguments)" :commentList="commentList" :commentNum="commentNum" :label="label" :avatar="avatar" :placeholder="placeholder" :minRows="minRows" :maxRows="maxRows"></comment>
             </el-card>
@@ -72,6 +73,20 @@ export default {
   },
   data () {
     return {
+      dynastyList: [
+        '先秦',
+        '汉朝',
+        '魏晋',
+        '南北',
+        '隋朝',
+        '唐朝',
+        '宋朝',
+        '元朝',
+        '明朝',
+        '清朝',
+        '近代',
+        '现代'
+      ],
       iconCollection: 'iconfont iconcollection',
       markCollection: false, // 默认不收藏
       iconLikes: 'iconfont iconlikes',
@@ -128,12 +143,15 @@ export default {
           avatar: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
         }
       ],
-      savorList: {}
+      savorList: {},
+      show: false,
+      moreType: {}
     }
   },
   mounted () {
-    this.getMethods()
+    this.getMethods(0)
     this.saveComm()
+    // this.getType()
   },
   methods: {
     // 格式化时间方法
@@ -210,11 +228,11 @@ export default {
       console.log('被评论用户targetUserId=' + args[1])
       console.log('父级评论id=' + args[2])
     },
-    getMethods () {
+    getMethods (val) {
       this.$axios.get('appreciate/methodList')
         .then(res => {
           console.log(res)
-          this.savorList = res.data[0]
+          this.savorList = res.data[val]
           this.dealWith()
           // console.log(this.savorList.content.repalce(/\n/g, '<br/>'))
         })
@@ -240,7 +258,10 @@ export default {
           type: 1
         },
         {
-          headers: {Authorization: localStorage.getItem('Authorization')}
+          headers: {
+            Authorization: localStorage.getItem('Authorization'),
+            'Content-Type': 'multipart/form-data'
+          }
         })
           .then(res => {
             console.log(res)
@@ -249,6 +270,20 @@ export default {
             console.log(err)
           })
       }
+    },
+    getType (val) {
+      this.$router.push({path: '/savDetail', query: {item: val}})
+      /* let url = 'appreciate/poetryList/' + val
+      this.$axios.get(url)
+        .then(res => {
+          console.log(res)
+          this.moreType = res.data
+          // console.log(this.savorList.content.repalce(/\n/g, '<br/>'))
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      this.show = true */
     }
   }
 }

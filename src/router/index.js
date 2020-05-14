@@ -9,6 +9,7 @@ import Classic from '@/components/classic/classic'
 import Info from '@/components/info/info'
 import Fun from '@/components/fun/fun'
 import Savor from '@/components/savor/savor'
+import SavDetail from '@/components/savor/savDetail'
 import Activity from '@/components/activity/activity'
 import ClassicPoem from '@/components/classic/classicPoem'
 import InfoPoet from '@/components/info/infoPoet'
@@ -80,6 +81,11 @@ export default new Router({
       'path': '/savor',
       'name': 'Savor',
       'component': Savor
+    },
+    {
+      'path': '/savDetail',
+      'name': 'SavDetail',
+      'component': SavDetail
     },
     {
       'path': '/activity',

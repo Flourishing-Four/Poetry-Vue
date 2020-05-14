@@ -9,9 +9,35 @@
           </span>
         </el-card>
         <el-card class="search-main__card" shadow="hover">
-          <div class="search-main__card--group" v-for="(item, index) in type" :key="index">
-            <span class="dateTitle">{{item.lable}}</span>
-            <el-card shadow="hover" v-for="(item, index) in content" :key="index">{{item.lable}}</el-card>
+          <div class="search-main__card--group">
+            <span class="dateTitle">典/诗词经典</span>
+            <el-card shadow="hover" v-for="(item, index) in poetryCont" :key="index">
+              <div slot="header" class="clearfix">
+                <router-link :to="{name: 'ClassicPoem', query:{poetryData: item}}"><el-link :underline="false" class="title">{{item.poetryTitle.replace(/[\(（][^\(（]+[\)）]/g, '')}}</el-link></router-link>
+                <span class="subTitle">{{item.dynasty + '·' + item.authorName}}</span>
+              </div>
+              <div class="text item" v-for="i in poetryBodyList[index].poetryBody" :key="i">
+                {{i}}
+              </div>
+            </el-card>
+          </div>
+          <div class="search-main__card--group">
+            <span class="dateTitle">闻/诗词知识与诗人轶事</span>
+            <el-card shadow="hover" v-for="(item, index) in authorCont" :key="index">
+              <div slot="header" class="clearfix">
+                <router-link :to="{name: 'InfoPoet', query:{poetList: item}}"><el-link :underline="false">{{item.authorName}}</el-link></router-link>
+              </div>
+              <div class="text item" v-html="item.authorDesc"></div>
+            </el-card>
+          </div>
+          <div class="search-main__card--group">
+            <span class="dateTitle">品/诗词品鉴</span>
+            <el-card shadow="hover" v-for="(item, index) in appreCont" :key="index">
+              <div slot="header" class="clearfix">
+                <router-link :to="{name: 'InfoPoet', query:{poetList: item}}"><el-link :underline="false">{{item.title}}</el-link></router-link>
+              </div>
+              <div class="text item" v-html="item.appreciate"></div>
+            </el-card>
           </div>
         </el-card>
     </div>
@@ -32,17 +58,18 @@ export default {
         {lable: '近一周', select: ''},
         {lable: '近一月', select: ''}
       ],
-      type: [
-        {lable: '典/诗词经典'},
-        {lable: '闻/诗词知识与诗人轶事'},
-        {lable: '品/诗词品鉴'}
-      ],
       content: [
         {lable: '全部', select: 'select'},
         {lable: '活动', select: ''},
         {lable: '作品展', select: ''}
       ],
+      poetryCont: [],
+      authorCont: [],
+      appreCont: [],
       historyList: [],
+      poetryBodyList: [{
+        poetryBody: [] // 用。！？；分割得到的诗文数组
+      }],
       search_val: this.$route.query.search// 这里并不会动态赋值
     }
   },
@@ -96,6 +123,10 @@ export default {
       })
         .then(res => {
           console.log(res)
+          this.poetryCont = res.data
+          this.poetryCont.splice(5, this.poetryCont.length - 5)
+          console.log('shici' + this.poetryCont)
+          this.dealWithPoem()
         })
         .catch(err => {
           console.log(err)
@@ -107,6 +138,8 @@ export default {
       })
         .then(res => {
           console.log(res)
+          this.appreCont = res.data
+          this.appreCont.splice(5, this.appreCont.length - 5)
         })
         .catch(err => {
           console.log(err)
@@ -118,10 +151,42 @@ export default {
       })
         .then(res => {
           console.log(res)
+          this.authorCont = res.data
+          this.authorCont.splice(5, this.authorCont.length - 5)
         })
         .catch(err => {
           console.log(err)
         })
+    },
+    dealWithPoem () {
+      var vm = this
+      let item = []
+      let list = vm.poetryCont ? vm.poetryCont : ''
+      for (let i in list) {
+        let str = list[i].poetryBody.replace(/<[^>]+>/g, '') // 去掉htlm标签
+        str = str.replace(/\s/g, '') // 去掉空格
+        str = str.replace(/&nbsp;/ig, '') // 去掉nbsp
+        str = str.replace(/\[.*?\]/g, '') // 去掉[]
+        str = str.replace(/【[^】]+】/g, '') // 去掉【】
+        item.push({poetryBody: str.split('。')})
+      }
+      vm.poetryBodyList = item
+      for (let j in vm.poetryBodyList) {
+        for (let i in vm.poetryBodyList[j].poetryBody) {
+          // 使用。分割后数组最后是空元素；此时的处理会使以？！结尾的诗句也会被圧进句号
+          if (vm.poetryBodyList[j].poetryBody[i] !== '') {
+            vm.poetryBodyList[j].poetryBody.splice(i, 1, vm.poetryBodyList[j].poetryBody[i] + '。')
+          }
+          let symbol = ['！', '？', '；']
+          for (let n in symbol) {
+            if (vm.poetryBodyList[j].poetryBody[i].indexOf(symbol[n]) !== -1) {
+              let str = vm.poetryBodyList[j].poetryBody[i].replace(/。/g, '') // 将多余的句号删除
+              let arr = str.split(symbol[n])
+              vm.poetryBodyList[j].poetryBody.splice(i, 1, arr[0] + symbol[n], arr[1])
+            }
+          }
+        }
+      }
     }
   }
 }
@@ -161,15 +226,37 @@ export default {
       padding: 40px;
       &--group {
         padding: 40px 80px;
+        .dateTitle {
+          font-size: 20px;
+          color: #68AAAD;
+        }
         .el-card{
           margin: 30px;// 这里上下、左右的间距都会塌陷
+          .el-link {
+              font-size: 20px;
+              font-weight: 500;
+          }
+          .subTitle {
+              font-size: 12px;
+              color: rgb(165, 165, 165);
+              position: relative;
+              top: 5px;
+              right: -10px;
+          }
+          .text {
+            font-size: 16px;
+            line-height: 1.5;
+          }
+          .item {
+            margin-bottom: 14px;
+          }
         }
-        .el-card:nth-child(2n) {
+        /* .el-card:nth-child(2n) {
           background-color: #99a9bf;
         }
         .el-card:nth-child(2n+1) {
           background-color: #d3dce6;
-        }
+        } */
       }
     }
   }
