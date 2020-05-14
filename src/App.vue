@@ -58,6 +58,7 @@ export default {
     },
     logout () {
       localStorage.removeItem('Authorization')
+      localStorage.removeItem('Username')
       this.$router.push('/index')
       this.isLogin = false
       this.$message('退出成功')

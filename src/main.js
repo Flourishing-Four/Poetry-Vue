@@ -35,10 +35,14 @@ new Vue({
 // 异步请求前在header里加入token
 axios.interceptors.request.use(
   config => {
+    // config.headers('Access-Control-Allow-Origin', '*')
     if (config.url === '/login' || config.url === '/register') { // 如果是登录和注册操作，则不需要携带header里面的token
+      console.log('不需要携带header里面的token')
+      // config.headers('Access-Control-Allow-Origin', 'http://localhost:8080')
     } else {
       if (localStorage.getItem('Authorization')) {
         config.headers.Authorization = localStorage.getItem('Authorization')
+        console.log('需要携带header里面的token')
       }
     }
     return config

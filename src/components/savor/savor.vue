@@ -269,7 +269,7 @@ export default {
           data: {
             pid: 0,
             replyUid: '',
-            // userId: '',
+            userId: '',
             content: '这是第一条评论',
             entityId: 11,
             type: 1
@@ -285,6 +285,7 @@ export default {
             }
           ],
           headers: {
+            Authorization: localStorage.getItem('Authorization'),
             'Content-Type': 'application/x-www-form-urlencoded'
           }
         })

@@ -62,10 +62,19 @@ export default {
         this.$message.error('用户名或密码不能为空')
       } else {
         this.$axios
-          .post('/login', {
+          .post('http://localhost:8443/api/login', {
             username: this.loginForm.username,
             password: this.loginForm.password,
             rememberMe: true
+          },
+          {
+            headers: {
+              'Access-Control-Allow-Origin': 'http://localhost:8080',
+              'Access-Control-Allow-Headers': 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild',
+              'Access-Control-Allow-Methods': 'PUT,POST,GET,DELETE,OPTIONS',
+              'X-Powered-By': ' 3.2.1',
+              'Content-Type': 'application/json;charset=utf-8'
+            }
           })
           .then(response => {
             console.log(response)
