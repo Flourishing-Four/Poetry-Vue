@@ -23,7 +23,7 @@
     </div>
     <div class="info-content">
       <el-card class="info-content__card" v-for="(item, index) in poetList" :key="index">
-        <div class="avatar"><img src="http://localhost:8443/api/author/authorList/uploadsabcd/userup/huangfuran.jpg"/></div>
+        <div class="avatar"><img src="http://localhost:8443/upload/huangfuran.jpg"/></div>
         <div class="clearfix">
           <router-link :to="{name: 'InfoPoet', query:{poetList: item}}"><el-link :underline="false">{{item.authorName}}</el-link></router-link>
           <!-- <span class="poem">李白</span> -->
@@ -277,7 +277,7 @@ export default {
         .avatar {
           width: 100px;
           height: 200px;
-          background-image: url('/uploadsabcd/userup/huangfuran.jpg');
+          background-image: url(require('http://localhost:8443/upload/huangfuran.jpg'));
           // background-color: blueviolet;
           float: left;
           margin-right:20px;

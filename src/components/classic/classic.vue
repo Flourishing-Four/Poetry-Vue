@@ -298,6 +298,8 @@ export default {
         str = str.replace(/\[.*?\]/g, '') // 去掉[]
         str = str.replace(/【[^】]+】/g, '') // 去掉【】
         item.push({poetryBody: str.split('。')})
+        /* let strr = list[i].poetryTitle.replace(/[\(（][^\(（]+[\)）]/g, '')
+        vm.poetryData[i].poetryTitle.replace(list[i].poetryTitle, strr) */
       }
       vm.poetryBodyList = item
       for (let j in vm.poetryBodyList) {
@@ -338,23 +340,28 @@ export default {
       }
     },
     getDynasty (val) {
-      let url = 'poetry/dynastyList/'
-      url += val
-      this.$axios
-        .get(url, {
-          params: {
-            page: this.page,
-            pagesize: 5
-          }
-        })
-        .then(response => {
-          console.log(response)
-          this.poetryData = response.data
-          this.dealWithPoem()// 用。！？；分割诗文数组
-        })
-        .catch(error => {
-          console.log(error)
-        })
+      if (val === undefined) {
+        // console.log('this.getPoetry()')
+        this.getPoetry()
+      } else {
+        let url = 'poetry/dynastyList/'
+        url += val
+        this.$axios
+          .get(url, {
+            params: {
+              page: this.page,
+              pagesize: 5
+            }
+          })
+          .then(response => {
+            console.log(response)
+            this.poetryData = response.data
+            this.dealWithPoem()// 用。！？；分割诗文数组
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      }
     },
     getPoem (val) {
       let url = 'poetry/authorList/'
@@ -399,8 +406,8 @@ export default {
     '$route': {
       handler (route) {
         const that = this
-        if (route.query.dynasty !== null) {
-          console.log(route.query.dynasty)
+        if (route.query.dynasty !== undefined) {
+          // console.log('here' + route.query.dynasty + '0' + route)
           that.getDynasty(route.query.dynasty)
         }
       }

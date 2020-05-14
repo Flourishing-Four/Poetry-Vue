@@ -38,10 +38,10 @@
               <br />萧条清万里，瀚海寂无波。
               </div>
             </div>
-            <div id="yi" v-show="showShi">
+            <div id="yi" v-show="showShi" style="font-size:20px;font-family: 'STLITI';">
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;由于大汉无灭匈奴之计策，至使匈奴进犯至渭桥。离长安不远的五原，就驻扎着胡人骄悍的兵马。将士们受命西征，大军横行于阴山之侧。攻下了盛产胭脂的燕支山，使胡人惊叹：失我燕支山，使我妇立无颜色！汉兵转战万里，大获全胜。回渡黄河，凯旋收兵。从此休兵，胡汉人民都乐其太平。茫茫瀚海，沙浪寂寂，萧条万里，和平安静。
             </div>
-            <div id="pin" v-show="showPin">
+            <div id="pin" v-show="showPin" style="font-size:20px;font-family: 'STLITI';">
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;此诗声声实在，句句真情。诗意具有飞扬跋扈、迅猛阔大的气势，又充溢着边塞秋景萧煞悲凉之意，表达出诗人对唐太宗委任李靖等名将平定匈奴离叛的祝颂之意，也表现出诗人对国家安危的忧虑和对民生疾苦的关怀。
             </div>
           </div>
@@ -59,17 +59,17 @@
       </div>
       <div class="homePage-main__storyPoem layout">
         <div class="homePage-main__storyPoem--storyLeft">
-            <div class="splitLine">诗人生平轶事</div>
+            <div class="splitLine" style="margin: 10px;">诗人生平轶事</div>
             <div class="homePage-main__storyPoem--content">
-              <h2>李白</h2>
+              <div class="poemName">&nbsp;&nbsp;荆 轲(？─前227)</div><div>战国末期刺客。卫国人，胆识过人，擅技击之术。曾游历燕国，被太子丹尊为上卿，后被委派去行刺秦王政。秦王政二十年（前227年），他携秦逃将樊於期头颅和夹有匕首的督亢（今河北易县、涿县、固安一带）地图。欲乘献图之机行刺。及至图穷匕现。刺秦未果，反为所杀。</div>
             </div>
         </div>
         <div class="homePage-main__storyPoem--storyRight">
-          <div class="splitLine">诗词小知识</div>
+          <div class="splitLine" style="margin-top: 10px;">诗词小知识</div>
           <div class="homePage-main__storyPoem--content">
-
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;词最初称为“曲词”或“曲子词”，是配音乐的。从配音乐这点说，它和乐府是同一类的文学体裁，同样是来自民间文学。后来词也跟乐府一样，逐渐跟音乐分离了，成为诗的别体，所以有人把词称为“诗余”。文人的词深受律诗的影响，所以词中的律句特别多。 词是长短句，但是全篇的字数是有一定的。每句的平仄也是一定的。
           </div>
-          <router-link to="/info"><span class="more">查 看 更 多</span></router-link>
+          <router-link to="/fun"><el-link :underline="false" class="more">查 看 更 多</el-link></router-link>
         </div>
       </div>
       <div class="homePage-main__gamePoem layout">
@@ -126,7 +126,6 @@ export default {
       if (num === 0) {
         this.showShi = false// false
         this.showPin = false// false
-        this.$router.push({path: '/classic', query: {dynasty: '宋朝'}})
       } else if (num === 1) {
         this.showShi = !this.showShi// true
         this.showPin = false
@@ -296,10 +295,15 @@ export default {
           border-bottom: 2px solid rgb(204, 224, 212);
         }
       &--content{
-        padding: 20px 10px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        padding: 20px 20px;
+        line-height: 30px;
+        // display: flex;
+        // justify-content: center;
+        // align-items: center;
+        .poemName{
+          font-size: 28px;
+          margin-bottom: 10px;
+        }
       }
       &--storyLeft {
         width: 58%;
@@ -317,8 +321,9 @@ export default {
           color: rgb(140, 16, 56);
           font-weight: bold;
           position: relative;
-          top: 230px;
+          top: 270px;
           left: 41%;
+          z-index: 999;
         }
       }
     }
