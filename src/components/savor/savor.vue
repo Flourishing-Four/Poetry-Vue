@@ -249,7 +249,7 @@ export default {
     saveComm () {
       if (localStorage.getItem('Authorization') !== null) {
         console.log('用户已登录')
-        this.$axios.post('comment/save', {
+        /* this.$axios.post('comment/save', {
           pid: 0,
           replyUid: null,
           // userId: '',
@@ -261,6 +261,31 @@ export default {
           headers: {
             Authorization: localStorage.getItem('Authorization'),
             'Content-Type': 'multipart/form-data'
+          }
+        }) */
+        this.$axios({
+          method: 'post',
+          url: 'comment/save',
+          data: {
+            pid: 0,
+            replyUid: '',
+            // userId: '',
+            content: '这是第一条评论',
+            entityId: 11,
+            type: 1
+          },
+          transformRequest: [
+            function (data) {
+              let ret = ''
+              for (let it in data) {
+                ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+              }
+              ret = ret.substring(0, ret.lastIndexOf('&'))
+              return ret
+            }
+          ],
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
           }
         })
           .then(res => {
