@@ -4,7 +4,7 @@
       <el-form-item label="上传配图" :label-width="formLabelWidth">
           <el-upload v-model="form.pic"
             class="avatar-uploader"
-            :action= "http://localhost:8443/api/article/save"
+            action= "https://jsonplaceholder.typicode.com/posts/"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload">
@@ -65,14 +65,17 @@ export default {
       console.log(formName)
       this.$refs[formName].validate((valid) => { //  && this.form.name && this.form.content && this.form.desc
         if (valid) {
+          let headers = {headers: {'Content-Type': 'multipart/form-data'}}
+          let data = {
+            title: this.form.name,
+            content: this.form.content,
+            idea: this.form.desc,
+            // file: this.form.pic,
+            contentType: false
+            // token: localStorage.getItem('Authorization')
+          }
           this.$axios
-            .post('article/save', {
-              title: this.form.name,
-              content: this.form.content,
-              idea: this.form.desc,
-              file: this.form.pic,
-              token: localStorage.getItem('Authorization')
-            })
+            .post('article/save', data, headers)
             .then(response => {
               console.log(response)
               if (response.status === 200) {

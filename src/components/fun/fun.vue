@@ -159,7 +159,8 @@ export default {
             width: 340px;
             margin: 0 20px 30px 20px;
             .text {
-            font-size: 14px;
+            font-size: 16px;
+            line-height: 26px;
             }
             .item {
                 margin-bottom: 18px;
@@ -184,6 +185,10 @@ export default {
       background-color: rgba(195, 221, 205, 0.253);
       border: 1px solid rgb(182, 198, 188);
       border-radius: 4px;
+      .text {
+        font-size: 16px;
+        line-height: 28px;
+      }
     }
 }
 </style>

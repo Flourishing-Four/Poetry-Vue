@@ -229,20 +229,26 @@ export default {
       console.log(str)
     },
     saveComm () {
-      this.$axios.post('comment/save', {
-        pid: 0,
-        replyUid: null,
-        userId: 'Lin',
-        content: '这是第一条评论',
-        entityId: 1,
-        type: 1
-      })
-        .then(res => {
-          console.log(res)
+      if (localStorage.getItem('Authorization') !== null) {
+        console.log('用户已登录')
+        this.$axios.post('comment/save', {
+          pid: 0,
+          replyUid: null,
+          // userId: '',
+          content: '这是第一条评论',
+          entityId: 11,
+          type: 1
+        },
+        {
+          headers: {Authorization: localStorage.getItem('Authorization')}
         })
-        .catch(err => {
-          console.log(err)
-        })
+          .then(res => {
+            console.log(res)
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      }
     }
   }
 }

@@ -88,8 +88,34 @@ export default {
       console.log('数组' + this.historyList + '最新值' + this.search_val)
     },
     searchPoet () {
-      let url = 'poetry/search/' + this.search_val
-      this.$axios.post(url)
+      // let url = 'poetry/search/' + this.search_val
+      this.$axios.get('poetry/search/', {
+        params: {
+          keywords: this.search_val
+        }
+      })
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      this.$axios.get('appreciate/search/', {
+        params: {
+          keywords: this.search_val
+        }
+      })
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      this.$axios.get('author/search/', {
+        params: {
+          keywords: this.search_val
+        }
+      })
         .then(res => {
           console.log(res)
         })

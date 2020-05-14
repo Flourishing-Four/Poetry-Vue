@@ -121,6 +121,9 @@ export default {
   },
   activated () {
     this.poetList = this.$route.query.poetList
+    this.getWorks()
+    console.log('excute')
+    console.log('excute' + this.poetList.authorName)
   },
   methods: {
     getWorks () {
@@ -131,6 +134,7 @@ export default {
       })
         .then(res => {
           console.log(res)
+          this.poetList = res.data
           this.dealWith(res.data)
         })
         .catch(err => {
