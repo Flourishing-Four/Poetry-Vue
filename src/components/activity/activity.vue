@@ -24,16 +24,25 @@
         </el-card>
         <el-card class="activity-main__card" shadow="hover">
           <div class="activity-main__card--group">
-            <span class="dateTitle">2020年5月9日</span>
+            <span class="dateTitle">2020年5月12日</span>
             <el-card shadow="hover">
               <router-link :to="{name: 'ActivityMatch'}"><el-link :underline="false">【征稿启事】第四届“诗词中国”传统诗词创作大赛</el-link></router-link>
             </el-card>
-            <el-card shadow="hover">
+            <el-card shadow="hover" v-for="(item, index) in ArticleData" :key="index">
+              <div slot="header" class="clearfix">
+                <el-link :underline="false" class="title">{{item.title}}</el-link>
+                <span class="subTitle" style="dispaly: block; font-size: 14px;">{{'-' + item.idea}}</span>
+              </div>
+              <div class="text item" v-for="i in poetryBodyList[index].content" :key="i">
+                {{i}}
+              </div>
+            </el-card>
+            <!-- <el-card shadow="hover">
               <router-link :to="{name: 'ActivityWorks'}"><el-link :underline="false">作品</el-link></router-link>
             </el-card>
             <el-card shadow="hover">
               <router-link :to="{name: 'ActivityWorks'}"><el-link :underline="false">作品</el-link></router-link>
-            </el-card>
+            </el-card> -->
           </div>
           <!-- <div class="activity-main__card--group">
             <span class="dateTitle">2020年5月7日</span>
@@ -61,15 +70,15 @@ export default {
         {lable: '不限', select: 'select'},
         {lable: '近一周', select: ''},
         {lable: '近一月', select: ''},
-        {lable: '近三月', select: ''},
-        {lable: '近六月', select: ''}
+        {lable: '近三月', select: ''}
       ],
       type: [
         {lable: '全部', select: 'select'},
         {lable: '活动', select: ''},
         {lable: '作品展', select: ''}
       ],
-      ArticleData: [{}]
+      ArticleData: [{}],
+      poetryBodyList: []
     }
   },
   mounted () {
@@ -83,26 +92,42 @@ export default {
         .then(response => {
           console.log(response)
           this.ArticleData = response.data
+          this.dealWithPoem()
         })
         .catch(error => {
           console.log(error)
         })
+    },
+    dealWithPoem () {
+      var vm = this
+      let item = []
+      let list = vm.ArticleData ? vm.ArticleData : ''
+      for (let i in list) {
+        let str = list[i].content.replace(/<[^>]+>/g, '') // 去掉htlm标签
+        str = str.replace(/\s/g, '') // 去掉空格
+        str = str.replace(/&nbsp;/ig, '') // 去掉nbsp
+        str = str.replace(/\[.*?\]/g, '') // 去掉[]
+        str = str.replace(/【[^】]+】/g, '') // 去掉【】
+        item.push({content: str.split('。')})
+      }
+      vm.poetryBodyList = item
+      for (let j in vm.poetryBodyList) {
+        for (let i in vm.poetryBodyList[j].content) {
+          // 使用。分割后数组最后是空元素；此时的处理会使以？！结尾的诗句也会被圧进句号
+          if (vm.poetryBodyList[j].content[i] !== '') {
+            vm.poetryBodyList[j].content.splice(i, 1, vm.poetryBodyList[j].content[i] + '。')
+          }
+          let symbol = ['！', '？', '；']
+          for (let n in symbol) {
+            if (vm.poetryBodyList[j].content[i].indexOf(symbol[n]) !== -1) {
+              let str = vm.poetryBodyList[j].content[i].replace(/。/g, '') // 将多余的句号删除
+              let arr = str.split(symbol[n])
+              vm.poetryBodyList[j].content.splice(i, 1, arr[0] + symbol[n], arr[1])
+            }
+          }
+        }
+      }
     }
-  //   // 此处传值方式需要完善，两组按钮分别单选
-  //   selectBtu (index) {
-  //     if (index < 3) {
-  //       for (var i = 0; i < this.type.length; i++) {
-  //         this.type[i].select = ''
-  //       }
-  //       this.type[index].select = 'select'
-  //     } else {
-  //       for (var j = 0; j < this.date.length; j++) {
-  //         this.date[j].select = ''
-  //       }
-  //       this.date[index - 3].select = 'select'
-  //     }
-  //     console.log(index)
-  //   }
   }
 }
 </script>
@@ -161,24 +186,27 @@ export default {
         .dateTitle {
           // margin-top: 40px;
           font-size: 18px;
+          color: #68AAAD;
         }
         .el-card{
           margin: 30px;// 这里上下、左右的间距都会塌陷
-          font-size: 18px;
+          font-size: 16px;
+          line-height: 26px;
+          background-color: rgba(104, 169, 173, 0.027);
         }
         .el-link{
-          color: rgba(255, 255, 255, 0.973);
-          font-size: 15px;
+          font-size: 22px;
+          font-family: 'STLITI';
         }
         .el-link:hover{
           color: rgb(140, 16, 56);
         }
-        .el-card:nth-child(2n) {
+        /* .el-card:nth-child(2n) {
           background-color: #a4b4ca;
         }
         .el-card:nth-child(2n+1) {
           background-color: #c0cddb;
-        }
+        } */
       }
     }
   }

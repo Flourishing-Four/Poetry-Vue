@@ -95,7 +95,7 @@ export default {
   //text-align: center;
   margin: 0 auto;
   color: #2c3e50;
-  background-image: url('./components/img/newbackg.jpg');
+  background-image: url('./components/img/newbackg.png');
   background-size: 100%;
   background-attachment: fixed;
   // filter: blur(3px);

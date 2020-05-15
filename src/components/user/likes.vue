@@ -48,12 +48,12 @@ export default {
       if (localStorage.getItem('Authorization') !== null) {
         console.log('用户已登录')
         this.$axios
-          .get('user/bookAuthor', {
+          .get('user/bookAuthor'/* , {
             params: {
               page: this.pageOne,
               pagesize: 5
             }
-          })
+          } */)
           .then(response => {
             console.log(response)
             this.poemLikes = response.data
@@ -70,12 +70,12 @@ export default {
       if (localStorage.getItem('Authorization') !== null) {
         console.log('用户已登录')
         this.$axios
-          .get('user/bookPoetry', {
+          .get('user/bookPoetry'/* , {
             params: {
               page: this.pageTwo,
               pagesize: 5
             }
-          })
+          } */)
           .then(response => {
             console.log(response)
             this.poetLikes = response.data
@@ -92,12 +92,12 @@ export default {
       if (localStorage.getItem('Authorization') !== null) {
         console.log('用户已登录')
         this.$axios
-          .get('user/bookArticle', {
+          .get('user/bookArticle'/* , {
             params: {
               page: this.pageThree,
               pagesize: 5
             }
-          })
+          } */)
           .then(response => {
             console.log(response)
             this.articleLikes = response.data
