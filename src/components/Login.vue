@@ -66,7 +66,7 @@ export default {
             username: this.loginForm.username,
             password: this.loginForm.password,
             rememberMe: true
-          },
+          }/* ,
           {
             headers: {
               'Access-Control-Allow-Origin': 'http://localhost:8080',
@@ -75,7 +75,7 @@ export default {
               'X-Powered-By': ' 3.2.1',
               'Content-Type': 'application/json;charset=utf-8'
             }
-          })
+          } */)
           .then(response => {
             console.log(response)
             if (response.status === 200) {

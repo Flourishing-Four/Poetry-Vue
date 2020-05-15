@@ -23,7 +23,7 @@
     </div>
     <div class="info-content">
       <el-card class="info-content__card" v-for="(item, index) in poetList" :key="index">
-        <div class="avatar"><img :src="'http://localhost:8443/upload/' + item.authorPicture"/></div>
+        <div class="avatar"><img :src="'http://localhost:8080/static/userup/' + item.authorPicture"/></div>
         <div class="clearfix">
           <router-link :to="{name: 'InfoPoet', query:{poetList: item}}"><el-link :underline="false">{{item.authorName}}</el-link></router-link>
           <!-- <span class="poem">李白</span> -->
