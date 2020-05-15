@@ -23,7 +23,7 @@
     </div>
     <div class="info-content">
       <el-card class="info-content__card" v-for="(item, index) in poetList" :key="index">
-        <div class="avatar"><img src="http://localhost:8443/upload/huangfuran.jpg"/></div>
+        <div class="avatar"><img :src="'http://localhost:8443/upload/' + item.authorPicture"/></div>
         <div class="clearfix">
           <router-link :to="{name: 'InfoPoet', query:{poetList: item}}"><el-link :underline="false">{{item.authorName}}</el-link></router-link>
           <!-- <span class="poem">李白</span> -->
@@ -121,6 +121,11 @@ export default {
         .then(response => {
           console.log(response)
           this.poetList = response.data
+          for (let i in this.poetList) {
+            if (this.poetList[i].authorPicture === '') {
+              this.poetList[i].authorPicture = 'huangfuran.jpg'
+            }
+          }
           this.dealWithPoem(this.poetList, 0)
         })
         .catch(error => {
@@ -277,7 +282,7 @@ export default {
         .avatar {
           width: 100px;
           height: 200px;
-          background-image: url(require('http://localhost:8443/upload/huangfuran.jpg'));
+          // background-image: url('http://localhost:8443/upload/huangfuran.jpg');
           // background-color: blueviolet;
           float: left;
           margin-right:20px;

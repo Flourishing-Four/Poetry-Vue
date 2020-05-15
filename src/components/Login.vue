@@ -62,7 +62,7 @@ export default {
         this.$message.error('用户名或密码不能为空')
       } else {
         this.$axios
-          .post('http://localhost:8443/api/login', {
+          .post('/login', {
             username: this.loginForm.username,
             password: this.loginForm.password,
             rememberMe: true
